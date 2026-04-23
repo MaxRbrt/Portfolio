@@ -1,0 +1,50 @@
+<svg width="960" height="640" viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Aplicativo mobile commerce</title>
+  <desc id="desc">Illustrative product mockup for a mobile store app with admin metrics and cart flow.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="960" y1="0" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071017"/>
+      <stop offset=".58" stop-color="#102438"/>
+      <stop offset="1" stop-color="#071017"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="196" x2="732" y1="84" y2="535" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#57B8FF"/>
+      <stop offset=".55" stop-color="#8EE6A7"/>
+      <stop offset="1" stop-color="#FFBF69"/>
+    </linearGradient>
+    <filter id="shadow" x="110" y="34" width="740" height="590" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="32" stdDeviation="34" flood-color="#000" flood-opacity=".42"/>
+    </filter>
+  </defs>
+  <rect width="960" height="640" fill="url(#bg)"/>
+  <path d="M62 514C178 388 292 560 420 413C554 260 657 84 898 202" stroke="url(#accent)" stroke-width="2" opacity=".34"/>
+  <circle cx="780" cy="146" r="102" fill="#57B8FF" opacity=".12"/>
+  <circle cx="166" cy="496" r="128" fill="#FFBF69" opacity=".1"/>
+  <g filter="url(#shadow)">
+    <rect x="260" y="70" width="310" height="500" rx="44" fill="#070B10" stroke="#FFFFFF" stroke-opacity=".18" stroke-width="2"/>
+    <rect x="284" y="102" width="262" height="436" rx="30" fill="#101821"/>
+    <rect x="310" y="130" width="210" height="44" rx="16" fill="#172433"/>
+    <rect x="328" y="146" width="92" height="11" rx="5.5" fill="#F7F3E8" opacity=".88"/>
+    <circle cx="496" cy="152" r="13" fill="#8EE6A7"/>
+    <rect x="310" y="202" width="210" height="120" rx="24" fill="url(#accent)" opacity=".94"/>
+    <path d="M338 286L376 238L414 268L458 222L501 286" stroke="#071017" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity=".72"/>
+    <rect x="310" y="346" width="96" height="78" rx="20" fill="#172433" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <rect x="424" y="346" width="96" height="78" rx="20" fill="#172433" stroke="#FFFFFF" stroke-opacity=".08"/>
+    <rect x="330" y="372" width="54" height="10" rx="5" fill="#F7F3E8" opacity=".8"/>
+    <rect x="330" y="392" width="34" height="8" rx="4" fill="#57B8FF"/>
+    <rect x="444" y="372" width="54" height="10" rx="5" fill="#F7F3E8" opacity=".8"/>
+    <rect x="444" y="392" width="34" height="8" rx="4" fill="#FFBF69"/>
+    <rect x="310" y="450" width="210" height="56" rx="18" fill="#F7F3E8"/>
+    <rect x="336" y="474" width="92" height="8" rx="4" fill="#071017"/>
+    <circle cx="489" cy="478" r="17" fill="#071017"/>
+  </g>
+  <g opacity=".92">
+    <rect x="590" y="170" width="180" height="122" rx="24" fill="#0D141D" stroke="#FFFFFF" stroke-opacity=".14"/>
+    <rect x="614" y="198" width="66" height="10" rx="5" fill="#F7F3E8"/>
+    <rect x="614" y="226" width="132" height="12" rx="6" fill="#57B8FF" opacity=".72"/>
+    <rect x="614" y="254" width="98" height="12" rx="6" fill="#8EE6A7" opacity=".72"/>
+    <rect x="162" y="206" width="118" height="122" rx="26" fill="#0D141D" stroke="#FFFFFF" stroke-opacity=".14"/>
+    <circle cx="221" cy="252" r="28" fill="#FFBF69"/>
+    <rect x="190" y="296" width="62" height="10" rx="5" fill="#F7F3E8"/>
+  </g>
+</svg>

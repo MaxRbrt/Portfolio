@@ -1,0 +1,39 @@
+<svg width="960" height="640" viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Vue SPA</title>
+  <desc id="desc">Illustrative Vue single page app mockup with component blocks and route flow.</desc>
+  <defs>
+    <linearGradient id="bg" x1="120" x2="830" y1="50" y2="584" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071017"/>
+      <stop offset=".48" stop-color="#13211D"/>
+      <stop offset="1" stop-color="#05070A"/>
+    </linearGradient>
+    <linearGradient id="vue" x1="298" x2="642" y1="178" y2="486" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8EE6A7"/>
+      <stop offset="1" stop-color="#57B8FF"/>
+    </linearGradient>
+    <filter id="shadow" x="120" y="62" width="720" height="526" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="30" stdDeviation="34" flood-color="#000" flood-opacity=".38"/>
+    </filter>
+  </defs>
+  <rect width="960" height="640" fill="url(#bg)"/>
+  <circle cx="222" cy="166" r="96" fill="#8EE6A7" opacity=".12"/>
+  <circle cx="760" cy="470" r="138" fill="#57B8FF" opacity=".1"/>
+  <g filter="url(#shadow)">
+    <rect x="170" y="102" width="620" height="424" rx="34" fill="#0B1118" stroke="#FFFFFF" stroke-opacity=".14" stroke-width="2"/>
+    <rect x="202" y="142" width="556" height="56" rx="18" fill="#111A23"/>
+    <rect x="226" y="164" width="88" height="10" rx="5" fill="#F7F3E8" opacity=".82"/>
+    <rect x="578" y="164" width="52" height="10" rx="5" fill="#8EE6A7"/>
+    <rect x="650" y="164" width="52" height="10" rx="5" fill="#57B8FF"/>
+    <path d="M480 238L545 350L480 462L415 350L480 238Z" fill="url(#vue)" opacity=".95"/>
+    <path d="M480 296L512 350L480 404L448 350L480 296Z" fill="#0B1118" opacity=".78"/>
+    <rect x="228" y="244" width="156" height="92" rx="22" fill="#111A23"/>
+    <rect x="576" y="244" width="156" height="92" rx="22" fill="#111A23"/>
+    <rect x="228" y="388" width="156" height="92" rx="22" fill="#111A23"/>
+    <rect x="576" y="388" width="156" height="92" rx="22" fill="#111A23"/>
+    <path d="M384 290H434M526 290H576M384 434H434M526 434H576" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 12"/>
+    <rect x="252" y="280" width="78" height="10" rx="5" fill="#F7F3E8" opacity=".72"/>
+    <rect x="600" y="280" width="78" height="10" rx="5" fill="#F7F3E8" opacity=".72"/>
+    <rect x="252" y="424" width="78" height="10" rx="5" fill="#F7F3E8" opacity=".72"/>
+    <rect x="600" y="424" width="78" height="10" rx="5" fill="#F7F3E8" opacity=".72"/>
+  </g>
+</svg>

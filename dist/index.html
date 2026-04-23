@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portf&oacute;lio de Marcos, desenvolvedor full stack focado em interfaces r&aacute;pidas, APIs s&oacute;lidas e experi&ecirc;ncias digitais com motion e 3D."
+    />
+    <link rel="icon" href="/assets/favicon-DQCxXYKo.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/assets/icon-C-V77gIc.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Marcos | Desenvolvedor Full Stack</title>
+    <script type="module" crossorigin src="/assets/index-CtLlv18C.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-motion-Ba-tr5ZQ.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-icons-BxkHrSyY.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-3d-DjLgkKqv.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-C6379FLe.css">
+  </head>
+  <body>
+    <div id="progress" class="fixed left-0 top-0 z-[100] h-[3px] w-0 bg-[#ffbf69]"></div>
+
+    <header
+      id="site-header"
+      class="fixed left-0 top-0 z-50 w-full border-b border-white/10 bg-[#05070a]/72 backdrop-blur-2xl"
+    >
+      <nav class="shell flex h-18 items-center justify-between gap-4">
+        <a href="#inicio" class="flex items-center gap-3 text-sm font-black uppercase tracking-[0.12em]">
+          <span class="grid size-9 place-items-center rounded-full bg-[#f7f3e8] text-[#05070a]">M</span>
+          Marcos
+        </a>
+
+        <div id="desktop-nav" class="hidden items-center gap-1 md:flex">
+          <a class="nav-link" href="#servicos">Servi&ccedil;os</a>
+          <a class="nav-link" href="#projetos">Projetos</a>
+          <a class="nav-link" href="#lab">3D Lab</a>
+          <a class="nav-link" href="#contato">Contato</a>
+        </div>
+
+        <div class="hidden items-center gap-2 md:flex">
+          <a class="icon-link" href="https://github.com/MaxRbrt" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <i data-lucide="code-xml" class="size-5"></i>
+          </a>
+          <a class="btn-primary gap-2" href="#contato">
+            <i data-lucide="send" class="size-4"></i>
+            Conversar
+          </a>
+        </div>
+
+        <button id="menu-toggle" class="icon-link md:hidden" type="button" aria-label="Abrir menu" aria-expanded="false">
+          <i data-lucide="menu" class="size-5"></i>
+        </button>
+      </nav>
+
+      <div id="mobile-nav" class="hidden border-t border-white/10 bg-[#05070a]/96 md:hidden">
+        <div class="shell grid gap-2 py-4">
+          <a class="nav-link" href="#servicos">Servi&ccedil;os</a>
+          <a class="nav-link" href="#projetos">Projetos</a>
+          <a class="nav-link" href="#lab">3D Lab</a>
+          <a class="nav-link" href="#contato">Contato</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="inicio" class="relative min-h-[94svh] overflow-hidden pt-28">
+        <div class="hero-canvas-wrap" aria-hidden="true">
+          <canvas id="hero-canvas"></canvas>
+        </div>
+        <div class="hero-vignette"></div>
+
+        <div class="shell relative z-10 grid min-h-[calc(94svh-7rem)] content-end gap-8 pb-10 lg:grid-cols-[1fr_360px] lg:items-end">
+          <div class="hero-content">
+            <p class="section-kicker reveal">Portfolio / Full stack / Motion</p>
+            <h1 class="hero-title font-display mt-5">
+              <span class="hero-line">Marcos</span>
+              <span class="hero-line accent">Developer</span>
+            </h1>
+            <p class="reveal mt-7 max-w-2xl text-lg leading-8 text-[#aab4bd] md:text-xl">
+              Desenvolvo interfaces com presen&ccedil;a, APIs bem estruturadas e experi&ecirc;ncias digitais que
+              carregam r&aacute;pido, respondem bem e parecem produto de verdade.
+            </p>
+
+            <div class="reveal mt-8 flex flex-wrap items-center gap-3">
+              <a class="btn-primary gap-2" href="#projetos">
+                <i data-lucide="sparkles" class="size-4"></i>
+                Ver projetos
+              </a>
+              <a class="btn-ghost gap-2" href="#contato">
+                <i data-lucide="mail" class="size-4"></i>
+                Falar comigo
+              </a>
+            </div>
+
+            <div class="reveal mt-8 flex items-center gap-3">
+              <a class="icon-link" href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
+                <i data-lucide="at-sign" class="size-5"></i>
+              </a>
+              <a class="icon-link" href="https://br.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <i data-lucide="network" class="size-5"></i>
+              </a>
+              <a class="icon-link" href="https://github.com/MaxRbrt" target="_blank" rel="noreferrer" aria-label="GitHub">
+                <i data-lucide="code-xml" class="size-5"></i>
+              </a>
+            </div>
+          </div>
+
+          <aside class="reveal glass noise-border rounded-lg p-4">
+            <div class="relative overflow-hidden rounded-md bg-[#0b1118]">
+              <img
+                class="aspect-square w-full object-cover"
+                src="/assets/profile/profile.jpg"
+                alt="Foto de perfil de Marcos"
+                onerror="this.onerror=null;this.src='/assets/profile/avatar.png';"
+              />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#05070a] to-transparent p-5">
+                <p class="text-sm font-black uppercase tracking-[0.18em] text-[#ffbf69]">Dispon&iacute;vel para projetos</p>
+                <p class="mt-2 text-2xl font-black">Web apps, APIs e produtos digitais.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="shell grid gap-4 py-6 md:grid-cols-3">
+        <article class="metric-card reveal" data-build="left">
+          <p class="metric-number">7</p>
+          <p class="metric-label">reposit&oacute;rios reais conectados &agrave; vitrine do portf&oacute;lio.</p>
+        </article>
+        <article class="metric-card reveal" data-build="up">
+          <p class="metric-number">60</p>
+          <p class="metric-label">fps como meta para microintera&ccedil;&otilde;es, transi&ccedil;&otilde;es e scroll narrativo.</p>
+        </article>
+        <article class="metric-card reveal" data-build="right">
+          <p class="metric-number">100%</p>
+          <p class="metric-label">responsivo, acess&iacute;vel e pronto para evoluir com projetos reais.</p>
+        </article>
+      </section>
+
+      <section id="servicos" class="shell py-24 md:py-32">
+        <div class="max-w-4xl">
+          <p class="section-kicker reveal" data-build="left">Servi&ccedil;os</p>
+          <h2 class="section-title reveal build-title">C&oacute;digo com acabamento de produto.</h2>
+          <p class="section-copy reveal mt-6" data-build="right">
+            Uma entrega boa n&atilde;o para no layout bonito. Ela precisa de arquitetura clara, performance,
+            seguran&ccedil;a, estados bem tratados e uma experi&ecirc;ncia que fa&ccedil;a sentido para quem usa.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-4 lg:grid-cols-3">
+          <button class="service-card text-left" type="button" data-service-card data-build="left" style="--card-color: #57b8ff" aria-expanded="false">
+            <span class="service-card-glow"></span>
+            <div class="flex items-start justify-between gap-5">
+              <i data-lucide="monitor-smartphone" class="size-10 text-[#57b8ff]"></i>
+              <span class="service-toggle"><i data-lucide="plus" class="size-4"></i></span>
+            </div>
+            <h3 class="mt-8 text-3xl font-black">Frontend</h3>
+            <p class="mt-4 leading-7 text-[#aab4bd]">
+              Interfaces responsivas, componentiza&ccedil;&atilde;o, anima&ccedil;&otilde;es com prop&oacute;sito e p&aacute;ginas otimizadas para convers&atilde;o,
+              SEO e performance.
+            </p>
+            <div class="service-detail" aria-hidden="true">
+              <p><i data-lucide="check-circle-2" class="size-4"></i> Design responsivo e componentizado.</p>
+              <p><i data-lucide="check-circle-2" class="size-4"></i> Microintera&ccedil;&otilde;es com GSAP e CSS.</p>
+              <p><i data-lucide="check-circle-2" class="size-4"></i> SEO t&eacute;cnico e carregamento r&aacute;pido.</p>
+            </div>
+            <span class="service-action">Explorar camada visual <i data-lucide="arrow-up-right" class="size-4"></i></span>
+          </button>
+
+          <button class="service-card text-left" type="button" data-service-card data-build="up" style="--card-color: #8ee6a7" aria-expanded="false">
+            <span class="service-card-glow"></span>
+            <div class="flex items-start justify-between gap-5">
+              <i data-lucide="server-cog" class="size-10 text-[#8ee6a7]"></i>
+              <span class="service-toggle"><i data-lucide="plus" class="size-4"></i></span>
+            </div>
+            <h3 class="mt-8 text-3xl font-black">Backend</h3>
+            <p class="mt-4 leading-7 text-[#aab4bd]">
+              APIs REST, autentica&ccedil;&atilde;o, regras de neg&oacute;cio, integra&ccedil;&otilde;es, bancos de dados e estrutura pronta para crescer.
+            </p>
+            <div class="service-detail" aria-hidden="true">
+              <p><i data-lucide="check-circle-2" class="size-4"></i> Rotas, autentica&ccedil;&atilde;o e permiss&otilde;es.</p>
+              <p><i data-lucide="check-circle-2" class="size-4"></i> Modelagem de dados e integra&ccedil;&otilde;es.</p>
+              <p><i data-lucide="check-circle-2" class="size-4"></i> Base limpa para manuten&ccedil;&atilde;o.</p>
+            </div>
+            <span class="service-action">Explorar camada l&oacute;gica <i data-lucide="arrow-up-right" class="size-4"></i></span>
+          </button>
+
+          <button class="service-card text-left" type="button" data-service-card data-build="right" style="--card-color: #ffbf69" aria-expanded="false">
+            <span class="service-card-glow"></span>
+            <div class="flex items-start justify-between gap-5">
+              <i data-lucide="boxes" class="size-10 text-[#ffbf69]"></i>
+              <span class="service-toggle"><i data-lucide="plus" class="size-4"></i></span>
+            </div>
+            <h3 class="mt-8 text-3xl font-black">Full stack</h3>
+            <p class="mt-4 leading-7 text-[#aab4bd]">
+              Produto de ponta a ponta: da tela ao servidor, com fluxo consistente, deploy organizado e manuten&ccedil;&atilde;o simples.
+            </p>
+            <div class="service-detail" aria-hidden="true">
+              <p><i data-lucide="check-circle-2" class="size-4"></i> Experi&ecirc;ncia, API e banco conectados.</p>
+              <p><i data-lucide="check-circle-2" class="size-4"></i> Deploy e fluxo de evolu&ccedil;&atilde;o.</p>
+              <p><i data-lucide="check-circle-2" class="size-4"></i> Produto pronto para apresenta&ccedil;&atilde;o.</p>
+            </div>
+            <span class="service-action">Explorar entrega completa <i data-lucide="arrow-up-right" class="size-4"></i></span>
+          </button>
+        </div>
+
+        <div class="reveal mt-10 flex flex-wrap gap-3">
+          <span class="tech-pill" data-build="left"><i data-lucide="badge-check" class="size-4 text-[#ffbf69]"></i>HTML5</span>
+          <span class="tech-pill" data-build="up"><i data-lucide="badge-check" class="size-4 text-[#57b8ff]"></i>Tailwind CSS v4</span>
+          <span class="tech-pill" data-build="up"><i data-lucide="badge-check" class="size-4 text-[#8ee6a7]"></i>GSAP</span>
+          <span class="tech-pill" data-build="up"><i data-lucide="badge-check" class="size-4 text-[#ff6f91]"></i>Three.js</span>
+          <span class="tech-pill" data-build="right"><i data-lucide="badge-check" class="size-4 text-[#b8a7ff]"></i>Node.js</span>
+        </div>
+      </section>
+
+      <section id="projetos" class="project-stage overflow-hidden py-24">
+        <div class="shell">
+          <p class="section-kicker reveal" data-build="left">Projetos</p>
+          <h2 class="section-title reveal build-title">Uma vitrine com ritmo.</h2>
+          <p class="section-copy reveal mt-6" data-build="right">
+            Cards conectados aos seus reposit&oacute;rios, com descri&ccedil;&otilde;es mais objetivas, imagens pr&oacute;prias e intera&ccedil;&atilde;o leve.
+          </p>
+        </div>
+
+        <div class="projects-viewport mt-12 overflow-visible pl-[max(16px,calc((100vw-1180px)/2))]">
+          <div id="projects-track" class="projects-track pr-8" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="lab" class="shell py-24 md:py-32">
+        <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div>
+            <p class="section-kicker reveal" data-build="left">3D Lab</p>
+            <h2 class="section-title reveal build-title">Interface que responde.</h2>
+            <p class="section-copy reveal mt-6" data-build="left">
+              Uma cena WebGL leve para dar identidade visual ao portf&oacute;lio, conectando stack, motion e intera&ccedil;&atilde;o em uma
+              &aacute;rea viva da p&aacute;gina.
+            </p>
+
+            <div class="reveal mt-8 flex flex-wrap gap-3" data-build="left" role="group" aria-label="Modos da cena 3D">
+              <button class="mode-button is-active" type="button" data-mode="interface">
+                <i data-lucide="layout-dashboard" class="size-4"></i>
+                Interface
+              </button>
+              <button class="mode-button" type="button" data-mode="api">
+                <i data-lucide="braces" class="size-4"></i>
+                API
+              </button>
+              <button class="mode-button" type="button" data-mode="fullstack">
+                <i data-lucide="orbit" class="size-4"></i>
+                Full stack
+              </button>
+            </div>
+          </div>
+
+          <div class="lab-canvas-shell reveal" data-build="right">
+            <canvas id="lab-canvas"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section id="contato" class="shell py-24 md:py-32">
+        <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p class="section-kicker reveal" data-build="left">Contato</p>
+            <h2 class="section-title reveal build-title">Vamos tirar uma ideia do papel.</h2>
+            <p class="section-copy reveal mt-6" data-build="left">
+              Me conte o contexto, objetivo e prazo. Eu retorno com uma dire&ccedil;&atilde;o clara para transformar isso em produto.
+            </p>
+          </div>
+
+          <form id="portfolio-form" class="glass reveal grid gap-4 rounded-lg p-5 md:p-7" data-build="right">
+            <div class="grid gap-4 md:grid-cols-2">
+              <input class="form-field" type="text" name="nome" placeholder="Nome" required />
+              <input class="form-field" type="email" name="email" placeholder="Email" required />
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <input class="form-field" type="tel" name="telefone" placeholder="Telefone" />
+              <input class="form-field" type="text" name="assunto" placeholder="Assunto" />
+            </div>
+            <textarea class="form-field min-h-40 resize-none" name="mensagem" placeholder="Mensagem" required></textarea>
+            <button class="btn-primary justify-self-start gap-2" type="submit">
+              <i data-lucide="send" class="size-4"></i>
+              Enviar mensagem
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-white/10 py-8">
+      <div class="shell flex flex-col gap-4 text-sm text-[#aab4bd] md:flex-row md:items-center md:justify-between">
+        <p>&copy; <span id="year"></span> Marcos. Todos os direitos reservados.</p>
+        <div class="flex gap-3">
+          <a class="icon-link" href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
+            <i data-lucide="at-sign" class="size-5"></i>
+          </a>
+          <a class="icon-link" href="https://br.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <i data-lucide="network" class="size-5"></i>
+          </a>
+          <a class="icon-link" href="https://github.com/MaxRbrt" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <i data-lucide="code-xml" class="size-5"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
