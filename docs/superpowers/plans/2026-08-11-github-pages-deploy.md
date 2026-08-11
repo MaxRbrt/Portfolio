@@ -31,7 +31,7 @@
 - `package.json`: exposes `test:pages` and `test:workflow` verification commands.
 - `.github/workflows/deploy-pages.yml`: builds and deploys `dist/`.
 
-### Task 1: Add failing GitHub Pages build regression
+### Task 1: Add regression and make Vite output project-site-safe
 
 **Files:**
 - Create: `scripts/check-pages-build.mjs`
@@ -99,7 +99,7 @@ Expected: FAIL with `compiled HTML must load assets below /Portfolio/` or `produ
 
 **Anti-pattern guards:** Do not weaken the assertion to accept `/assets/`. Do not assert hashed filenames, because hashes legitimately change between builds.
 
-### Task 2: Make Vite output project-site-safe
+#### Implement the project-site-safe build
 
 **Files:**
 - Move: `assets/**` to `public/assets/**`
@@ -209,7 +209,7 @@ Expected: one focused commit; `git status --short` is clean.
 
 **Anti-pattern guards:** Do not hardcode the repository base separately in every project object. Do not add a copy plugin. Do not commit regenerated `dist/`. Do not change GSAP or Three.js source.
 
-### Task 3: Add tested Pages deployment workflow
+### Task 2: Add tested Pages deployment workflow
 
 **Files:**
 - Create: `scripts/check-pages-workflow.mjs`
