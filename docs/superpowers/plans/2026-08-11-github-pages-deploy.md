@@ -16,6 +16,7 @@
 - Keep existing tracked `dist/` content out of commits; GitHub Actions owns future production builds.
 - Workflow permissions must be limited to `contents: read`, `pages: write`, and `id-token: write`.
 - Use official documented action majors: `actions/checkout@v7`, `actions/setup-node@v7`, `actions/configure-pages@v5`, `actions/upload-pages-artifact@v4`, and `actions/deploy-pages@v4`.
+- Do not push, merge, or change GitHub Pages settings; deliver branch `fix/github-pages-animations` for manual publication by the user.
 
 ---
 
@@ -348,89 +349,14 @@ Expected: one focused commit; `git status --short` is clean.
 
 **Anti-pattern guards:** Do not combine build and deploy into an undocumented custom action. Do not grant `contents: write`. Do not omit `needs: build`, environment URL, or OIDC permission. Do not upload repository root.
 
-### Task 4: Publish and enable Actions as Pages source
+## Manual publication handoff
 
-**Files:**
-- External repository state: `MaxRbrt/Portfolio` `main` branch and Pages settings.
+After implementation and final branch review:
 
-**Interfaces:**
-- Consumes: two verified local commits after design commit `0dd23b7`.
-- Produces: GitHub workflow run deploying to `https://maxrbrt.github.io/Portfolio/`.
-
-- [ ] **Step 1: Review exact outgoing commits**
-
-Run:
-
-```bash
-git log --oneline origin/main..HEAD
-git diff --stat origin/main..HEAD
-git status --short
-```
-
-Expected: design, build-path fix, and workflow commits only; clean worktree.
-
-- [ ] **Step 2: Request action-time confirmation**
-
-State exact external effects: push commits to public `MaxRbrt/Portfolio`, enable GitHub Actions as Pages source, and start public deployment. Wait for explicit confirmation.
-
-- [ ] **Step 3: Push commits**
-
-Run: `git push origin main`
-
-Expected: remote `main` advances. If Git credentials are unavailable, apply same commits through authenticated GitHub UI; do not expose credentials or create tokens.
-
-- [ ] **Step 4: Select GitHub Actions Pages source**
-
-Open `https://github.com/MaxRbrt/Portfolio/settings/pages`, set **Source** to **GitHub Actions**, and verify setting persists.
-
-- [ ] **Step 5: Observe deployment run**
-
-Open repository Actions page and wait for `Deploy Vite site to Pages` to finish.
-
-Expected: build and deploy jobs succeed; deployment reports `https://maxrbrt.github.io/Portfolio/`.
-
-**Anti-pattern guards:** Do not force-push. Do not create or reveal a personal access token. Do not change repository visibility or custom domain settings.
-
-### Task 5: Verify production behavior
-
-**Files:**
-- Read-only production site and browser state.
-
-**Interfaces:**
-- Consumes: deployed Pages URL.
-- Produces: evidence that compiled JavaScript and animation runtime work.
-
-- [ ] **Step 1: Load production site without cache dependency**
-
-Open `https://maxrbrt.github.io/Portfolio/` and reload after deployment.
-
-Expected: title remains `Marcos | Desenvolvedor Full Stack`; styles load immediately.
-
-- [ ] **Step 2: Verify resource base and console**
-
-Inspect loaded script and stylesheet URLs.
-
-Expected: local resources start with `https://maxrbrt.github.io/Portfolio/assets/`; no console errors or 404 responses for `/src/main.js` or `/assets/`.
-
-- [ ] **Step 3: Verify motion and 3D runtime**
-
-Confirm:
-
-- Hero title and reveal elements animate on load.
-- Scroll-triggered service/project content reveals.
-- Hero and lab canvases match rendered containers rather than default `300x150` fallback.
-- Lab mode buttons update Three.js scene.
-- Desktop project track animates horizontally where viewport qualifies.
-
-- [ ] **Step 4: Verify static and interactive content**
-
-Confirm icons render, project cards contain images, profile image resolves, mobile menu toggles, and service cards expand.
-
-- [ ] **Step 5: Record final state**
-
-Report deployed workflow status, public URL, and verification results. Mention any behavior intentionally skipped because current viewport does not qualify.
-
-**Anti-pattern guards:** Do not submit contact form during verification. Do not infer animation success only from DOM presence; observe state change or runtime sizing.
+- Review `git log --oneline origin/main..HEAD`, `git diff --stat origin/main..HEAD`, and `git status --short`.
+- Report branch name, commits, tests, and exact manual push/merge steps.
+- Leave remote `main`, GitHub Pages settings, and production site unchanged.
+- After user merges or pushes manually, Pages source must be changed to **GitHub Actions** once; production verification can then confirm GSAP and Three.js behavior.
 
 ## Final Verification Checklist
 
@@ -438,7 +364,7 @@ Report deployed workflow status, public URL, and verification results. Mention a
 - [ ] `npm run test:pages` passes.
 - [ ] `npm run test:workflow` passes.
 - [ ] `git diff --check` passes.
-- [ ] Production resources use `/Portfolio/assets/`.
-- [ ] GitHub Actions build and deployment jobs pass.
-- [ ] GSAP and Three.js behavior is visible in production.
+- [ ] Built resources use `/Portfolio/assets/`.
+- [ ] Workflow contract matches official Pages actions.
+- [ ] Local preview loads compiled GSAP and Three.js bundles without console errors.
 - [ ] No unrelated source, visual, visibility, domain, or form changes were made.
