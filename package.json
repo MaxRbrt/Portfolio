@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1"
+    "preview": "vite preview --host 127.0.0.1",
+    "test:pages": "node scripts/check-pages-build.mjs",
+    "test:workflow": "node scripts/check-pages-workflow.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
