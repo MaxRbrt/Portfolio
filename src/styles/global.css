@@ -1,0 +1,181 @@
+@import "tailwindcss";
+@import "./secoes.css";
+
+/* ============================================================
+   1. TOKENS
+   ============================================================ */
+@theme {
+  --color-preto: #080809;
+  --color-preto-2: #121214;
+  --color-off-white: #f5f5f2;
+  --color-claro-2: #e8e8e3;
+  --color-cinza-texto: #a1a1aa;
+  --color-cinza-suave: #d4d4d4;
+  --color-cinza-escuro: #52525b;
+  --color-prata: #c9ccd3;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-texto: "Geist", "Segoe UI", system-ui, sans-serif;
+  --radius-grande: 28px;
+  --radius-medio: 20px;
+  --ease-entrada: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-saida: cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+:root {
+  --duracao-entrada: 700ms;
+  --duracao-saida: 180ms;
+  --duracao-hover: 200ms;
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  color-scheme: dark;
+}
+
+/* ============================================================
+   2. BASE
+   ============================================================ */
+html {
+  background: var(--color-preto);
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-preto);
+  color: var(--color-off-white);
+  font-family: var(--font-texto);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-prata);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--color-prata);
+  color: var(--color-preto);
+}
+
+/* ============================================================
+   3. TIPOGRAFIA
+   ============================================================ */
+.texto-monumental {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(48px, 11vw, 184px);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.texto-titulo {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: clamp(34px, 6vw, 88px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.texto-frase {
+  font-size: clamp(18px, 1.9vw, 22px);
+  line-height: 1.5;
+  max-width: 60ch;
+  margin: 0;
+  color: var(--cor-secundaria);
+}
+
+.texto-frase strong {
+  color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+.texto-discreto {
+  font-size: 14px;
+  color: var(--cor-secundaria);
+  margin: 0;
+}
+
+/* ============================================================
+   4. FAIXAS (ESCURA E CLARA)
+   ============================================================ */
+.faixa {
+  --cor-primaria: var(--color-off-white);
+  --cor-secundaria: var(--color-cinza-texto);
+  --cor-superficie: var(--color-preto-2);
+  --cor-texto-botao: var(--color-preto);
+  position: relative;
+  background: var(--color-preto);
+  color: var(--cor-primaria);
+  padding-left: var(--gutter);
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: clamp(80px, 12vw, 180px);
+}
+
+.faixa-clara {
+  --cor-primaria: var(--color-preto);
+  --cor-secundaria: var(--color-cinza-escuro);
+  --cor-superficie: var(--color-claro-2);
+  --cor-texto-botao: var(--color-off-white);
+  background: var(--color-off-white);
+}
+
+.miolo {
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+/* ============================================================
+   5. BOTÕES EM PÍLULA
+   ============================================================ */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 15px/1 var(--font-texto);
+  padding: 15px 24px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--cor-primaria);
+  color: var(--cor-texto-botao);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--duracao-hover) var(--ease-entrada),
+    background-color var(--duracao-hover) var(--ease-entrada);
+}
+
+.botao:hover {
+  transform: translateY(-2px);
+}
+
+.botao:active {
+  transform: translateY(0);
+}
+
+.botao-secundario {
+  background: var(--cor-superficie);
+  color: var(--cor-primaria);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

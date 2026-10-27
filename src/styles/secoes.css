@@ -1,0 +1,536 @@
+/* ============================================================
+   1. NAVEGAÇÃO E ATALHO DE TECLADO
+   ============================================================ */
+.pular {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 50;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--color-off-white);
+  color: var(--color-preto);
+  transform: translateY(-160%);
+  transition: transform var(--duracao-hover) var(--ease-entrada);
+}
+
+.pular:focus-visible {
+  transform: translateY(0);
+}
+
+.navegacao {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(env(safe-area-inset-top, 0px) + 20px) max(20px, env(safe-area-inset-right, 0px))
+    20px max(20px, env(safe-area-inset-left, 0px));
+  color: var(--color-off-white);
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.navegacao a {
+  pointer-events: auto;
+  color: inherit;
+  text-decoration: none;
+}
+
+.navegacao-marca {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+
+.navegacao-links {
+  display: flex;
+  gap: clamp(16px, 3vw, 36px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.navegacao-links a {
+  position: relative;
+  display: inline-block;
+  padding-block: 12px;
+}
+
+.navegacao-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duracao-hover) var(--ease-entrada);
+}
+
+.navegacao-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.etiquetas li {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--cor-superficie);
+  color: var(--cor-primaria);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ============================================================
+   2. HERO
+   ============================================================ */
+.faixa.hero {
+  min-height: 100svh;
+  display: flex;
+  background: transparent;
+  padding-block: calc(env(safe-area-inset-top, 0px) + 96px) 32px;
+}
+
+.hero-miolo {
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+}
+
+.hero-texto {
+  align-self: end;
+  display: grid;
+  gap: clamp(24px, 3vw, 40px);
+}
+
+.hero-nome .linha {
+  display: block;
+}
+
+.hero-apoio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.hero-apoio .texto-frase {
+  max-width: 46ch;
+}
+
+.hero-dica {
+  justify-self: center;
+}
+
+.rosto-fixo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.rosto-fixo canvas {
+  pointer-events: none;
+}
+
+.rosto-estatico {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 70% 40%;
+}
+
+main,
+.rodape {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   3. MANIFESTO
+   ============================================================ */
+.manifesto-texto {
+  font-size: clamp(40px, 8.4vw, 136px);
+  font-stretch: 100%;
+  max-width: 14ch;
+}
+
+/* ============================================================
+   4. PROJETOS
+   ============================================================ */
+.projetos-cabecalho {
+  display: grid;
+  gap: 24px;
+  margin-bottom: clamp(40px, 6vw, 80px);
+}
+
+.galeria {
+  margin-inline: calc(var(--gutter) * -1);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.galeria::-webkit-scrollbar {
+  display: none;
+}
+
+.galeria-trilho {
+  display: flex;
+  gap: clamp(16px, 2.4vw, 32px);
+  width: max-content;
+  padding-inline: var(--gutter);
+  padding-block: 24px;
+}
+
+.painel {
+  width: min(86vw, 940px);
+  scroll-snap-align: center;
+  display: grid;
+  gap: 24px;
+  padding: clamp(14px, 1.6vw, 20px);
+  border-radius: var(--radius-grande);
+  background: var(--color-preto);
+  color: var(--color-off-white);
+  --cor-primaria: var(--color-off-white);
+  --cor-secundaria: var(--color-cinza-texto);
+  --cor-superficie: var(--color-preto-2);
+  --cor-texto-botao: var(--color-preto);
+  transition: transform var(--duracao-hover) var(--ease-entrada);
+}
+
+.painel-imagem {
+  border-radius: var(--radius-medio);
+  overflow: hidden;
+  aspect-ratio: 1440 / 846;
+  background: var(--color-preto-2);
+}
+
+.painel-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-entrada);
+}
+
+.painel:hover .painel-imagem img {
+  transform: scale(1.03);
+}
+
+.painel-texto {
+  display: grid;
+  gap: 14px;
+  padding: 4px clamp(4px, 1.2vw, 12px) 12px;
+}
+
+.painel-titulo {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 800;
+  font-size: clamp(32px, 4.4vw, 60px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.painel-destaque {
+  margin: 0;
+  font-size: clamp(18px, 1.6vw, 21px);
+  font-weight: 600;
+}
+
+.painel-descricao {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--color-cinza-texto);
+}
+
+.outros {
+  margin-top: clamp(56px, 8vw, 120px);
+  display: grid;
+  gap: 20px;
+}
+
+.outros-titulo {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.outros-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.outro a {
+  display: grid;
+  gap: 6px;
+  height: 100%;
+  padding: 22px 24px;
+  border-radius: var(--radius-medio);
+  background: var(--cor-superficie);
+  color: var(--cor-primaria);
+  text-decoration: none;
+  transition: transform var(--duracao-hover) var(--ease-entrada);
+}
+
+.outro a:hover {
+  transform: translateY(-2px);
+}
+
+.outro-nome {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.outro-descricao {
+  color: var(--cor-secundaria);
+  font-size: 15px;
+}
+
+/* ============================================================
+   5. SOBRE E STACK
+   ============================================================ */
+.faixa.sobre {
+  padding-top: 0;
+}
+
+.sobre-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+}
+
+.sobre-titulo {
+  grid-column: 1 / -1;
+  font-size: clamp(48px, 10vw, 160px);
+}
+
+.sobre-foto {
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-grande);
+  filter: grayscale(1) contrast(1.05);
+}
+
+.sobre-texto {
+  display: grid;
+  gap: 20px;
+}
+
+.faixa.stack {
+  padding-top: 0;
+}
+
+.stack-grade {
+  margin-top: clamp(32px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
+}
+
+.stack-grupo {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 28px;
+  border-radius: var(--radius-grande);
+  background: var(--cor-superficie);
+}
+
+.stack-titulo {
+  margin: 0;
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+
+.stack-grupo .etiquetas li {
+  background: var(--color-off-white);
+}
+
+/* ============================================================
+   6. TRAJETÓRIA
+   ============================================================ */
+.trajetoria-lista {
+  margin: clamp(32px, 5vw, 64px) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+
+.trajetoria-etapa {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+  gap: 24px;
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: var(--radius-grande);
+  background: var(--cor-superficie);
+}
+
+.trajetoria-periodo {
+  margin: 0;
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: clamp(20px, 2vw, 26px);
+  color: var(--color-prata);
+}
+
+.trajetoria-titulo {
+  margin: 0 0 4px;
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.trajetoria-descricao {
+  margin: 14px 0 0;
+  max-width: 62ch;
+  color: var(--cor-secundaria);
+}
+
+/* ============================================================
+   7. CONTATO E RODAPÉ
+   ============================================================ */
+.faixa.contato {
+  min-height: calc(100svh - 90px);
+  display: flex;
+  align-items: center;
+  background: transparent;
+}
+
+.contato-miolo {
+  width: 100%;
+  display: grid;
+  gap: clamp(24px, 3vw, 40px);
+}
+
+.contato-titulo {
+  max-width: 9ch;
+}
+
+.contato-email {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.contato-endereco {
+  font-family: var(--font-display);
+  font-stretch: 100%;
+  font-weight: 600;
+  font-size: clamp(22px, 3.2vw, 44px);
+  letter-spacing: -0.02em;
+  color: var(--color-off-white);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.contato-endereco:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+}
+
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 28px max(16px, env(safe-area-inset-right, 0px))
+    calc(env(safe-area-inset-bottom, 0px) + 28px) var(--gutter);
+  color: var(--color-cinza-texto);
+  font-size: 14px;
+}
+
+.rodape p {
+  margin: 0;
+}
+
+/* ============================================================
+   8. TELAS ESTREITAS
+   ============================================================ */
+@media (max-width: 760px) {
+  .navegacao-links {
+    gap: 16px;
+    font-size: 14px;
+  }
+
+  .sobre-grade,
+  .trajetoria-etapa {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .trajetoria-etapa {
+    gap: 8px;
+  }
+}
+
+/* ============================================================
+   9. GALERIA CURVA (COMPUTADOR, COM MOVIMENTO)
+   ============================================================ */
+.galeria[data-curva] {
+  overflow-x: clip;
+  overflow-y: visible;
+  scroll-snap-type: none;
+  perspective: 1400px;
+}
+
+.galeria[data-curva] .galeria-trilho {
+  transform-style: preserve-3d;
+  padding-inline: 18vw;
+}
+
+.galeria[data-curva] .painel {
+  width: min(76vw, 1180px);
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  align-items: center;
+  will-change: transform;
+}
+
+.galeria[data-curva] .painel-titulo {
+  font-size: clamp(32px, 3.4vw, 52px);
+}
+
+.galeria[data-curva] .painel-descricao {
+  font-size: 15px;
+}
