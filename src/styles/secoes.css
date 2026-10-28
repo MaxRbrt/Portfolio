@@ -443,8 +443,9 @@ main,
   gap: clamp(24px, 3vw, 40px);
 }
 
-.contato-titulo {
+.texto-monumental.contato-titulo {
   max-width: 9ch;
+  line-height: 1.08;
 }
 
 .contato-email {
