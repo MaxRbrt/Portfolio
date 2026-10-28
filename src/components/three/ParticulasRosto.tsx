@@ -2,10 +2,12 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { calcularDispersao, calcularOpacidade, estadoCena } from "./estadoCena";
+import { PIVO_CABECA_Y, separarRosto, type ParteRosto } from "./separarRosto";
 import { fragmentoParticulas, verticeParticulas } from "./shaders";
 
-const GIRO_MAXIMO = 0.26;
-const SUAVIZACAO_MOUSE = 0.06;
+const GIRO_HORIZONTAL = THREE.MathUtils.degToRad(6);
+const GIRO_VERTICAL = THREE.MathUtils.degToRad(4);
+const AMORTECIMENTO = 5;
 const ATRASO_MAXIMO = 0.45;
 
 type PropsParticulas = {
@@ -18,12 +20,13 @@ type PropsParticulas = {
 // 1. GEOMETRIA
 // Monta alvo, origem, brilho e atraso de cada ponto uma vez só.
 // ============================================================
-function criarGeometria(pontos: Float32Array) {
+function criarGeometria({ pontos, pesos }: ParteRosto, respirar: boolean) {
   const total = pontos.length / 4;
   const alvos = new Float32Array(total * 3);
   const origens = new Float32Array(total * 3);
   const brilhos = new Float32Array(total);
   const atrasos = new Float32Array(total);
+  const movimentos = new Float32Array(total).fill(respirar ? 1 : 0);
 
   for (let indice = 0; indice < total; indice += 1) {
     alvos[indice * 3] = pontos[indice * 4];
@@ -45,6 +48,8 @@ function criarGeometria(pontos: Float32Array) {
   geometria.setAttribute("aOrigem", new THREE.BufferAttribute(origens, 3));
   geometria.setAttribute("aBrilho", new THREE.BufferAttribute(brilhos, 1));
   geometria.setAttribute("aAtraso", new THREE.BufferAttribute(atrasos, 1));
+  geometria.setAttribute("aPeso", new THREE.BufferAttribute(pesos, 1));
+  geometria.setAttribute("aMovimento", new THREE.BufferAttribute(movimentos, 1));
   return geometria;
 }
 
@@ -83,68 +88,91 @@ function calcularEnquadramento(largura: number, altura: number) {
 // 3. COMPONENTE
 // ============================================================
 export default function ParticulasRosto({ pontos, seguirMouse, espalhar }: PropsParticulas) {
-  const grupo = useRef<THREE.Group>(null);
-  const nuvem = useRef<THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial>>(null);
+  const cabeca = useRef<THREE.Group>(null);
+  const nuvemCorpo = useRef<THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial>>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const viewport = useThree((estado) => estado.viewport);
   const pixelRatio = useThree((estado) => estado.viewport.dpr);
 
-  const geometria = useMemo(() => criarGeometria(pontos), [pontos]);
+  const partes = useMemo(() => separarRosto(pontos), [pontos]);
+  const geometriaCabeca = useMemo(() => criarGeometria(partes.cabeca, espalhar), [partes, espalhar]);
+  const geometriaCorpo = useMemo(() => criarGeometria(partes.corpo, false), [partes]);
   const material = useMemo(() => criarMaterial(pixelRatio), [pixelRatio]);
   const enquadramento = calcularEnquadramento(viewport.width, viewport.height);
 
   useEffect(() => {
     return () => {
-      geometria.dispose();
+      geometriaCabeca.dispose();
+      geometriaCorpo.dispose();
       material.dispose();
     };
-  }, [geometria, material]);
+  }, [geometriaCabeca, geometriaCorpo, material]);
 
   useEffect(() => {
     if (!seguirMouse) {
       mouse.current = { x: 0, y: 0 };
       return;
     }
+    const hero = document.querySelector<HTMLElement>("#inicio");
+    if (!hero) {
+      return;
+    }
     const acompanhar = (evento: PointerEvent) => {
-      mouse.current.x = (evento.clientX / window.innerWidth) * 2 - 1;
-      mouse.current.y = (evento.clientY / window.innerHeight) * 2 - 1;
+      const area = hero.getBoundingClientRect();
+      mouse.current.x = ((evento.clientX - area.left) / area.width) * 2 - 1;
+      mouse.current.y = ((evento.clientY - area.top) / area.height) * 2 - 1;
     };
     const soltar = () => {
       mouse.current = { x: 0, y: 0 };
     };
-    window.addEventListener("pointermove", acompanhar, { passive: true });
-    document.documentElement.addEventListener("pointerleave", soltar);
+    hero.addEventListener("pointermove", acompanhar, { passive: true });
+    hero.addEventListener("pointerleave", soltar);
+    window.addEventListener("blur", soltar);
     return () => {
-      window.removeEventListener("pointermove", acompanhar);
-      document.documentElement.removeEventListener("pointerleave", soltar);
+      hero.removeEventListener("pointermove", acompanhar);
+      hero.removeEventListener("pointerleave", soltar);
+      window.removeEventListener("blur", soltar);
     };
   }, [seguirMouse]);
 
-  useFrame((estado) => {
-    if (!grupo.current || !nuvem.current) {
+  useFrame((estado, delta) => {
+    if (!cabeca.current || !nuvemCorpo.current) {
       return;
     }
-    const uniforms = nuvem.current.material.uniforms;
+    const uniforms = nuvemCorpo.current.material.uniforms;
     const { montagem, saidaHero, voltaContato } = estadoCena;
     uniforms.uTempo.value = estado.clock.elapsedTime;
     uniforms.uMontagem.value = montagem;
     uniforms.uDispersao.value = espalhar ? calcularDispersao(saidaHero, voltaContato) : 0;
     uniforms.uOpacidade.value = calcularOpacidade(saidaHero, voltaContato);
-    estado.camera.position.z = 3 - saidaHero * (1 - voltaContato) * 0.6;
-
-    const giroY = mouse.current.x * GIRO_MAXIMO;
-    const giroX = mouse.current.y * GIRO_MAXIMO * 0.45;
-    grupo.current.rotation.y += (giroY - grupo.current.rotation.y) * SUAVIZACAO_MOUSE;
-    grupo.current.rotation.x += (giroX - grupo.current.rotation.x) * SUAVIZACAO_MOUSE;
+    const influencia = seguirMouse
+      ? Math.max(0, Math.min(1, (montagem - 0.95) * 20)) * (1 - saidaHero) ** 2
+      : 0;
+    const suavizacao = 1 - Math.exp(-AMORTECIMENTO * delta);
+    const giroY = mouse.current.x * GIRO_HORIZONTAL * influencia;
+    const giroX = mouse.current.y * GIRO_VERTICAL * influencia;
+    cabeca.current.rotation.y += (giroY - cabeca.current.rotation.y) * suavizacao;
+    cabeca.current.rotation.x += (giroX - cabeca.current.rotation.x) * suavizacao;
   });
 
   return (
-    <group
-      ref={grupo}
-      position={[enquadramento.x, enquadramento.y, 0]}
-      scale={enquadramento.escala}
-    >
-      <points ref={nuvem} geometry={geometria} material={material} frustumCulled={false} />
+    <group position={[enquadramento.x, enquadramento.y, 0]} scale={enquadramento.escala}>
+      <group name="bodyGroup">
+        <points
+          ref={nuvemCorpo}
+          geometry={geometriaCorpo}
+          material={material}
+          frustumCulled={false}
+        />
+      </group>
+      <group ref={cabeca} name="headGroup" position={[0, PIVO_CABECA_Y, 0]}>
+        <points
+          position={[0, -PIVO_CABECA_Y, 0]}
+          geometry={geometriaCabeca}
+          material={material}
+          frustumCulled={false}
+        />
+      </group>
     </group>
   );
 }
