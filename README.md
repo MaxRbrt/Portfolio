@@ -45,7 +45,9 @@ frente do rosto, pelo menos 1000 px de lado. Sem foto em `references/`, o script
 avisa que o resultado é provisório.
 
 Limite: com uma foto só, o rosto é fiel de frente e tem profundidade aproximada. Por isso o giro com o
-mouse fica limitado a 15 graus.
+mouse fica limitado a 8 graus para os lados e 5 para cima e para baixo. A cabeça gira
+inteira, o pescoço acompanha em degradê e os ombros ficam parados (pesos em
+`src/components/three/pesosAnatomicos.ts`, giro no shader).
 
 ## Onde mexer
 
