@@ -518,6 +518,7 @@ main,
 .galeria[data-curva] .galeria-trilho {
   transform-style: preserve-3d;
   padding-inline: 18vw;
+  pointer-events: none;
 }
 
 .galeria[data-curva] .painel {
@@ -525,6 +526,7 @@ main,
   grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
   align-items: center;
   will-change: transform;
+  pointer-events: auto;
 }
 
 .galeria[data-curva] .painel-titulo {
