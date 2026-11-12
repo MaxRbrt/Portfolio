@@ -1,41 +1,53 @@
 import { lazy, Suspense } from "react";
+import Carregamento from "./components/abertura/Carregamento";
+import { useSequenciaAbertura } from "./components/abertura/useSequenciaAbertura";
+import CursorContextual from "./components/layout/CursorContextual";
 import Navegacao from "./components/layout/Navegacao";
-import Rodape from "./components/layout/Rodape";
 import Contato from "./components/sections/Contato";
 import Hero from "./components/sections/Hero";
-import Manifesto from "./components/sections/Manifesto";
+import Industria from "./components/sections/Industria";
 import Projetos from "./components/sections/Projetos";
-import Sobre from "./components/sections/Sobre";
-import Stack from "./components/sections/Stack";
 import Trajetoria from "./components/sections/Trajetoria";
 import { useMovimentoEditorial } from "./components/motion/useMovimentoEditorial";
-import { useRolagemRosto } from "./components/motion/useRolagemRosto";
+import { useRolagemGaleria } from "./components/motion/useRolagemGaleria";
+import { useRolagemIndustria } from "./components/motion/useRolagemIndustria";
+import { useRolagemCidade } from "./components/motion/useRolagemCidade";
+import { useRolagemSuave } from "./components/motion/useRolagemSuave";
+import { useRolagemTransicao } from "./components/motion/useRolagemTransicao";
 
 const CenaRosto = lazy(() => import("./components/three/CenaRosto"));
 
 export default function App() {
+  useRolagemSuave();
+  useRolagemTransicao();
+  useRolagemGaleria();
+  useRolagemIndustria();
+  useRolagemCidade();
   useMovimentoEditorial();
-  useRolagemRosto();
+  useSequenciaAbertura();
 
   return (
     <>
       <a className="pular" href="#projetos">
         Pular para os projetos
       </a>
+      <Carregamento />
       <Suspense fallback={null}>
         <CenaRosto />
       </Suspense>
       <Navegacao />
-      <main>
-        <Hero />
-        <Manifesto />
-        <Projetos />
-        <Sobre />
-        <Stack />
-        <Trajetoria />
-        <Contato />
-      </main>
-      <Rodape />
+      <CursorContextual />
+      <div id="rolagem-moldura">
+        <div id="rolagem-conteudo">
+          <main>
+            <Hero />
+            <Projetos />
+            <Industria />
+            <Trajetoria />
+            <Contato />
+          </main>
+        </div>
+      </div>
     </>
   );
 }

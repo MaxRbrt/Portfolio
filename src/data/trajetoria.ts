@@ -12,7 +12,7 @@ export type EtapaTrajetoria = {
 
 export const trajetoria: EtapaTrajetoria[] = [
   {
-    periodo: "Jul 2026 — hoje",
+    periodo: "Desde jul 2026",
     titulo: "Estágio em desenvolvimento",
     lugar: "Transroni · Taquarituba, SP",
     descricao:

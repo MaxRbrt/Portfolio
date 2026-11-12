@@ -1,9 +1,15 @@
 // ============================================================
 // 1. PROJETOS
-// "vitrine" coloca o projeto na galeria curva com imagem; os
-// demais aparecem na lista de outros projetos. "site" e
-// "codigo" são opcionais: repositório privado fica só com site.
+// "vitrine" coloca o projeto na coluna de imagens da galeria;
+// todos aparecem na lista lateral, e os sem imagem levam ao
+// repositório. "site" e "codigo" são opcionais: repositório
+// privado fica só com site.
 // ============================================================
+
+export const galeriaProjetos = {
+  titulo: "Projetos selecionados",
+  notaSemImagem: "código",
+};
 
 export type Projeto = {
   id: string;

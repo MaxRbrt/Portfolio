@@ -1,5 +1,12 @@
 @import "tailwindcss";
-@import "./secoes.css";
+@import "./secoes/navegacao.css";
+@import "./secoes/abertura.css";
+@import "./secoes/hero.css";
+@import "./secoes/projetos.css";
+@import "./secoes/industria.css";
+@import "./secoes/trajetoria.css";
+@import "./secoes/contato.css";
+@import "./secoes/telas-estreitas.css";
 
 /* ============================================================
    1. TOKENS
@@ -13,12 +20,19 @@
   --color-cinza-suave: #d4d4d4;
   --color-cinza-escuro: #52525b;
   --color-prata: #c9ccd3;
+  --color-azul-noite: #0b1622;
+  --color-aco: #9fb3c8;
+  --color-vermelho: #c4161c;
+  --color-brasa: #ff7a3d;
+  --textura-grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-texto: "Geist", "Segoe UI", system-ui, sans-serif;
   --radius-grande: 28px;
   --radius-medio: 20px;
+  --radius-imagem: 12px;
   --ease-entrada: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-saida: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-cena: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 :root {
@@ -109,8 +123,15 @@ img {
   margin: 0;
 }
 
+.texto-legenda {
+  font: 500 13px/1.45 var(--font-texto);
+  letter-spacing: 0.01em;
+  color: var(--cor-secundaria);
+  margin: 0;
+}
+
 /* ============================================================
-   4. FAIXAS (ESCURA E CLARA)
+   4. FAIXAS ESCURAS COM GRÃO
    ============================================================ */
 .faixa {
   --cor-primaria: var(--color-off-white);
@@ -118,19 +139,13 @@ img {
   --cor-superficie: var(--color-preto-2);
   --cor-texto-botao: var(--color-preto);
   position: relative;
-  background: var(--color-preto);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgb(159 179 200 / 0.06), transparent 70%),
+    var(--textura-grao), var(--color-preto);
   color: var(--cor-primaria);
   padding-left: var(--gutter);
   padding-right: max(16px, env(safe-area-inset-right, 0px));
   padding-block: clamp(80px, 12vw, 180px);
-}
-
-.faixa-clara {
-  --cor-primaria: var(--color-preto);
-  --cor-secundaria: var(--color-cinza-escuro);
-  --cor-superficie: var(--color-claro-2);
-  --cor-texto-botao: var(--color-off-white);
-  background: var(--color-off-white);
 }
 
 .miolo {
@@ -171,6 +186,67 @@ img {
   color: var(--cor-primaria);
 }
 
+/* ============================================================
+   6. AMBIENTES IMERSIVOS
+   ============================================================ */
+.faixa-ambiente {
+  --cor-primaria: var(--color-off-white);
+  --cor-secundaria: var(--color-aco);
+  --cor-superficie: var(--color-preto-2);
+  --cor-texto-botao: var(--color-preto);
+  position: relative;
+  min-height: 100svh;
+  overflow: clip;
+  isolation: isolate;
+  background: var(--color-preto);
+  color: var(--cor-primaria);
+  padding-left: var(--gutter);
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: clamp(80px, 12vw, 180px);
+}
+
+.ambiente-camada,
+.ambiente-camada-luz,
+.ambiente-veu {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.ambiente-camada img,
+.ambiente-camada-luz img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ambiente-camada-luz {
+  mix-blend-mode: screen;
+}
+
+.ambiente-veu {
+  background: linear-gradient(to top, rgb(0 0 0 / 0.55), transparent 55%);
+}
+
+/* ============================================================
+   7. CARTÃO DE TEXTO
+   Texto sobre imagem fica num cartão escuro e translúcido, com
+   desfoque do fundo, para não misturar com a foto.
+   ============================================================ */
+.projeto-ficha,
+.industria-texto,
+.cidade-texto,
+.beco-texto {
+  border-radius: var(--radius-medio);
+  background: rgb(10 10 12 / 0.72);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.45);
+}
+
+/* ============================================================
+   8. MOVIMENTO REDUZIDO
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

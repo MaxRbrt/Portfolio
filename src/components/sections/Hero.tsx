@@ -4,33 +4,19 @@ export default function Hero() {
   return (
     <section id="inicio" className="faixa hero" aria-labelledby="titulo-hero">
       <div className="miolo hero-miolo">
-        <p className="texto-discreto hero-local">{perfil.cidade}</p>
-        <div className="hero-texto">
-          <h1 id="titulo-hero" className="texto-monumental hero-nome">
+        <div className="hero-topo">
+          <h1 id="titulo-hero" className="hero-nome">
             <span className="linha">Marcos</span> <span className="linha">Roberto</span>
           </h1>
+          <p className="hero-cargo">
+            {perfil.cargo} · {perfil.cidade}
+          </p>
+        </div>
+        <div className="hero-base">
           <div className="hero-apoio">
-            <p className="texto-frase">
-              <strong>{perfil.cargo}.</strong> {perfil.posicionamento}
-            </p>
-            <div className="acoes">
-              <a className="botao" href="#projetos">
-                Ver projetos
-              </a>
-              <a
-                className="botao botao-secundario"
-                href={perfil.linkedin}
-                target="_blank"
-                rel="noreferrer"
-              >
-                LinkedIn
-              </a>
-            </div>
+            <p className="hero-posicionamento">{perfil.posicionamento}</p>
           </div>
         </div>
-        <p className="texto-discreto hero-dica" aria-hidden="true">
-          Role para descer
-        </p>
       </div>
     </section>
   );

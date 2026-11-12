@@ -11,11 +11,13 @@
     "test": "vitest run",
     "rosto": "node --use-system-ca scripts/rosto/gerar-rosto.mjs",
     "test:pages": "node scripts/check-pages-build.mjs",
-    "test:workflow": "node scripts/check-pages-workflow.mjs"
+    "test:workflow": "node scripts/check-pages-workflow.mjs",
+    "ambientes": "node scripts/ambientes/converter-ambientes.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@react-three/fiber": "^9.8.2",
+    "animejs": "4.5.0",
     "gsap": "^3.15.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

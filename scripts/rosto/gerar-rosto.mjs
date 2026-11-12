@@ -1,7 +1,8 @@
 // ============================================================
 // GERAR ROSTO
 // Lê a foto em references/, recorta a pessoa do fundo, estima a
-// profundidade e grava a nuvem de pontos usada no site.
+// profundidade e grava a nuvem de pontos usada no site, com a
+// cor e a força de contorno de cada ponto.
 // Tudo roda neste computador: os modelos são baixados uma vez e
 // a foto nunca sai daqui.
 // Uso: npm run rosto [caminho-da-foto]
@@ -11,12 +12,17 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { pipeline, RawImage } from "@huggingface/transformers";
 import sharp from "sharp";
-import { amostrarPontos } from "./amostragem.mjs";
+import { amostrarPontos, calcularBordas, calcularRealceCabeca } from "./amostragem.mjs";
 
 const TOTAL_PONTOS = 60000;
 const SEMENTE = 2026;
+const REALCE_CABECA = 2.5;
 const LADO_TRABALHO = 640;
 const LADO_ESTATICO = 900;
+const VALORES_POR_PONTO = 4;
+const GANHO_CONTORNO_MASCARA = 1.2;
+const GANHO_CONTORNO_PROFUNDIDADE = 3.5;
+const GANHO_CONTORNO_BRILHO = 0.45;
 const PASTA_SAIDA = path.resolve("public/rosto");
 const FOTO_PROVISORIA = path.resolve("public/assets/profile/avatar.webp");
 
@@ -55,7 +61,14 @@ async function prepararFoto(caminho) {
     .raw()
     .toBuffer({ resolveWithObject: true });
   const brilho = Float32Array.from(data, (valor) => valor / 255);
-  return { arquivoTemporario, largura: informacao.width, altura: informacao.height, brilho };
+  const cores = await sharp(arquivoTemporario).raw().toBuffer();
+  return {
+    arquivoTemporario,
+    largura: informacao.width,
+    altura: informacao.height,
+    brilho,
+    cores,
+  };
 }
 
 function lerCanal(imagem, largura, altura, canal) {
@@ -105,7 +118,50 @@ function esticarDentroDaMascara(valores, mascara) {
 }
 
 // ============================================================
-// 5. ARQUIVOS DE SAÍDA
+// 5. COR E CONTORNO DE CADA PONTO
+// Acha o pixel de origem do ponto pelas coordenadas dele e grava
+// [r, g, b, contorno] em bytes, na mesma ordem do rosto.bin.
+// Contorno = borda da silhueta + degrau de profundidade + traço
+// do rosto (olhos, boca, óculos).
+// ============================================================
+function calcularContorno({ mascara, profundidade, brilho, largura, altura }) {
+  const bordaMascara = calcularBordas(mascara, largura, altura);
+  const bordaProfundidade = calcularBordas(profundidade, largura, altura);
+  const bordaBrilho = calcularBordas(brilho, largura, altura);
+  return bordaMascara.map((valor, indice) => {
+    const soma =
+      valor * GANHO_CONTORNO_MASCARA +
+      bordaProfundidade[indice] * GANHO_CONTORNO_PROFUNDIDADE +
+      bordaBrilho[indice] * GANHO_CONTORNO_BRILHO;
+    return Math.min(1, soma);
+  });
+}
+
+function acharPixelDoPonto(x, y, largura, altura) {
+  const maiorLado = Math.max(largura, altura);
+  const pixelX = Math.floor(x * maiorLado + largura / 2);
+  const pixelY = Math.floor(-y * maiorLado + altura / 2);
+  const xLimitado = Math.min(largura - 1, Math.max(0, pixelX));
+  const yLimitado = Math.min(altura - 1, Math.max(0, pixelY));
+  return yLimitado * largura + xLimitado;
+}
+
+function montarCoresDosPontos({ pontos, cores, contorno, largura, altura }) {
+  const total = pontos.length / VALORES_POR_PONTO;
+  const saida = new Uint8Array(total * VALORES_POR_PONTO);
+  for (let ponto = 0; ponto < total; ponto += 1) {
+    const base = ponto * VALORES_POR_PONTO;
+    const pixel = acharPixelDoPonto(pontos[base], pontos[base + 1], largura, altura);
+    saida[base] = cores[pixel * 3];
+    saida[base + 1] = cores[pixel * 3 + 1];
+    saida[base + 2] = cores[pixel * 3 + 2];
+    saida[base + 3] = Math.round(contorno[pixel] * 255);
+  }
+  return saida;
+}
+
+// ============================================================
+// 6. ARQUIVOS DE SAÍDA
 // ============================================================
 async function gravarImagemEstatica(pontos) {
   const lado = LADO_ESTATICO;
@@ -137,24 +193,36 @@ async function main() {
   }
   console.log(`Foto: ${foto.caminho}`);
 
-  const { arquivoTemporario, largura, altura, brilho } = await prepararFoto(foto.caminho);
+  const { arquivoTemporario, largura, altura, brilho, cores } = await prepararFoto(foto.caminho);
   const mascara = await recortarPessoa(arquivoTemporario, largura, altura);
   const profundidadeBruta = await estimarProfundidade(arquivoTemporario, largura, altura);
+  const brilhoEsticado = esticarDentroDaMascara(brilho, mascara);
+  const profundidade = esticarDentroDaMascara(profundidadeBruta, mascara);
 
   const pontos = amostrarPontos({
     largura,
     altura,
-    brilho: esticarDentroDaMascara(brilho, mascara),
-    profundidade: esticarDentroDaMascara(profundidadeBruta, mascara),
+    brilho: brilhoEsticado,
+    profundidade,
     mascara,
+    realce: calcularRealceCabeca(mascara, largura, altura, REALCE_CABECA),
     total: TOTAL_PONTOS,
     semente: SEMENTE,
   });
 
   mkdirSync(PASTA_SAIDA, { recursive: true });
+  const contorno = calcularContorno({
+    mascara,
+    profundidade,
+    brilho: brilhoEsticado,
+    largura,
+    altura,
+  });
+  const coresDosPontos = montarCoresDosPontos({ pontos, cores, contorno, largura, altura });
   writeFileSync(path.join(PASTA_SAIDA, "rosto.bin"), Buffer.from(pontos.buffer));
+  writeFileSync(path.join(PASTA_SAIDA, "rosto-cor.bin"), Buffer.from(coresDosPontos.buffer));
   await gravarImagemEstatica(pontos);
-  console.log(`Gravado: ${TOTAL_PONTOS} pontos em public/rosto/rosto.bin`);
+  console.log(`Gravado: ${TOTAL_PONTOS} pontos em public/rosto/rosto.bin e rosto-cor.bin`);
 }
 
 main().catch((erro) => {

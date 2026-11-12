@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
 // 1. CONSULTA DE MÍDIA REATIVA
 // Acompanha "reduzir movimento", tipo de ponteiro e afins.
 // ============================================================
-export function useMidia(consulta: string) {
+function useMidia(consulta: string) {
   return useSyncExternalStore(
     (avisar) => {
       const lista = window.matchMedia(consulta);
@@ -16,6 +16,10 @@ export function useMidia(consulta: string) {
   );
 }
 
-export const useMovimentoReduzido = () => useMidia("(prefers-reduced-motion: reduce)");
+export const COM_MOVIMENTO = "(prefers-reduced-motion: no-preference)";
+
+export const MOVIMENTO_REDUZIDO = "(prefers-reduced-motion: reduce)";
+
+export const useMovimentoReduzido = () => useMidia(MOVIMENTO_REDUZIDO);
 
 export const usePonteiroGrosso = () => useMidia("(pointer: coarse)");

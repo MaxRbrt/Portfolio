@@ -1,0 +1,356 @@
+/* ============================================================
+   1. LISTA DE PROJETOS
+   Título e nomes em caixa alta pequena, como o hero. O projeto
+   atual fica na cor forte, com um traço na frente.
+   ============================================================ */
+.projetos-lateral-miolo {
+  display: grid;
+  gap: 18px;
+}
+
+.projetos-titulo {
+  margin: 0;
+  font-family: var(--font-display);
+  font-stretch: 68%;
+  font-weight: 700;
+  font-size: clamp(22px, 1.9vw, 30px);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.projetos-lista {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.projetos-lista a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-block: 7px;
+  color: var(--cor-secundaria);
+  text-decoration: none;
+  transition: color var(--duracao-hover) var(--ease-entrada);
+}
+
+.projetos-lista a::before {
+  content: "";
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: width 400ms var(--ease-entrada);
+}
+
+.projetos-lista a:hover,
+.projetos-lista a[aria-current] {
+  color: var(--cor-primaria);
+}
+
+.projetos-lista a[aria-current]::before {
+  width: 18px;
+}
+
+.projetos-lista-nota {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   2. PROJETO NA COLUNA
+   ============================================================ */
+.projeto-quadro {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1440 / 846;
+  background: var(--color-preto-2);
+}
+
+.projeto-quadro img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.projeto-ficha {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  padding: 26px 28px;
+}
+
+.projeto-categoria {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cor-secundaria);
+}
+
+.projeto-titulo {
+  margin: 0;
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 800;
+  font-size: clamp(28px, 2.6vw, 44px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.projeto-descricao {
+  margin: 0;
+  max-width: 40ch;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--cor-secundaria);
+}
+
+.projeto-tecnologias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.projeto-tecnologias li + li::before {
+  content: "·";
+  margin-inline: 8px;
+  color: var(--cor-secundaria);
+}
+
+.projeto-links {
+  display: flex;
+  gap: 22px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.projeto-links a {
+  padding-block: 8px;
+  color: var(--cor-primaria);
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) no-repeat left 85% / 100% 2px;
+  transition: background-size 400ms var(--ease-entrada);
+}
+
+.projeto-links a:hover {
+  background-size: 0 2px;
+  background-position: right 85%;
+}
+
+/* ============================================================
+   3. CELULAR E TELA MÉDIA
+   Lista em cima, imagens planas em coluna e ficha embaixo.
+   ============================================================ */
+@media (max-width: 1023px) {
+  .projetos-lateral {
+    margin-bottom: clamp(48px, 8vw, 80px);
+  }
+
+  .projetos-coluna {
+    display: grid;
+    gap: clamp(64px, 10vw, 112px);
+  }
+
+  .projeto {
+    display: grid;
+    gap: 20px;
+  }
+}
+
+/* ============================================================
+   4. TELA LARGA
+   Lista parada à esquerda, uma tela por projeto: cartão plano
+   de canto reto no meio e ficha em cartão à direita.
+   ============================================================ */
+@media (min-width: 1024px) {
+  .faixa.projetos {
+    padding-block: 0;
+  }
+
+  .projetos-lateral {
+    position: absolute;
+    top: 0;
+    left: var(--gutter);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    width: min(22vw, 300px);
+    height: 100svh;
+    padding-left: clamp(4px, 1.4vw, 24px);
+  }
+
+  .projetos-coluna {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .projeto {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    place-items: center;
+    height: 100svh;
+    overflow: clip;
+  }
+
+  .projeto-quadro {
+    justify-self: unsafe center;
+    align-self: unsafe center;
+    width: min(42vw, 760px);
+  }
+
+  .projeto-ficha {
+    position: absolute;
+    z-index: 2;
+    inset-block: 0;
+    right: max(32px, 3.6vw);
+    width: min(25vw, 360px);
+    height: fit-content;
+    margin-block: auto;
+  }
+}
+
+/* ============================================================
+   5. CARROSSEL PRESO (useRolagemGaleria)
+   Uma tela de rolagem por projeto, em qualquer largura. Os
+   projetos ficam empilhados num palco de uma tela; só o cartão e
+   a ficha do atual recebem clique. A troca elástica mexe só no
+   transform do quadro.
+   ============================================================ */
+.projetos[data-carrossel="ativo"] {
+  height: calc(var(--quantidade-projetos, 1) * 100svh);
+  padding-block: 0;
+}
+
+.projetos[data-carrossel="ativo"] .projetos-coluna {
+  position: relative;
+  display: block;
+  height: 100svh;
+}
+
+.projetos[data-carrossel="ativo"] .projeto {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.projetos[data-carrossel="ativo"] .projeto-quadro,
+.projetos[data-carrossel="ativo"] .projeto[data-ativo] .projeto-ficha {
+  pointer-events: auto;
+}
+
+.projetos[data-fichas="animadas"] .projeto:focus-within [data-linha-ficha],
+.projetos[data-fichas="animadas"] .projeto:focus-within .projeto-ficha {
+  opacity: 1 !important;
+}
+
+/* ============================================================
+   6. CARROSSEL EM RETRATO (CELULAR E TELA MÉDIA)
+   Lista numa linha só, rolando para o lado, logo abaixo da
+   navegação. Cartão quase da largura da tela e ficha compacta
+   embaixo dele, tudo cabendo numa tela de 667 px.
+   ============================================================ */
+@media (max-width: 1023px) {
+  .projetos[data-carrossel="ativo"] .projetos-lateral {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 2;
+    margin: 0;
+    padding: calc(env(safe-area-inset-top, 0px) + 64px) var(--gutter) 0;
+  }
+
+  .projetos[data-carrossel="ativo"] .projetos-lateral-miolo {
+    gap: 6px;
+  }
+
+  .projetos[data-carrossel="ativo"] .projetos-titulo {
+    font-size: 20px;
+  }
+
+  .projetos[data-carrossel="ativo"] .projetos-lista {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    font-size: 11px;
+  }
+
+  .projetos[data-carrossel="ativo"] .projetos-lista-nota {
+    display: none;
+  }
+
+  .projetos[data-carrossel="ativo"] .projeto {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 14px;
+    padding: 132px 0 16px;
+  }
+
+  .projetos[data-carrossel="ativo"] .projeto-quadro {
+    width: min(100%, 620px);
+  }
+
+  .projetos[data-carrossel="ativo"] .projeto-ficha {
+    gap: 8px;
+    width: min(100%, 620px);
+    padding: 16px 18px;
+  }
+
+  .projetos[data-carrossel="ativo"] .projeto-titulo {
+    font-size: 26px;
+  }
+
+  .projetos[data-carrossel="ativo"] .projeto-descricao {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .projetos[data-carrossel="ativo"] .projeto-tecnologias {
+    font-size: 12px;
+  }
+
+  .projetos[data-carrossel="ativo"] .projeto-links a {
+    padding-block: 4px;
+  }
+}
+
+/* ============================================================
+   7. IMAGENS NO WEBGL
+   Com as texturas prontas, o canvas desenha o fundo escuro com
+   grão e as imagens planas; o quadro HTML fica só para clique
+   e cursor.
+   ============================================================ */
+.projetos[data-galeria="webgl"] {
+  background: transparent;
+}
+
+.projetos[data-galeria="webgl"] .projeto-quadro {
+  background: transparent;
+}
+
+.projetos[data-galeria="webgl"] .projeto-quadro img {
+  opacity: 0;
+}

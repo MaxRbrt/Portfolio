@@ -2,48 +2,64 @@ import type { Projeto } from "../../data/projetos";
 
 type PropsPainel = {
   projeto: Projeto;
+  primeiro: boolean;
 };
 
-export default function PainelProjeto({ projeto }: PropsPainel) {
+// ============================================================
+// 1. PROJETO NA COLUNA DA GALERIA
+// Cartão com a imagem no meio e ficha ao lado. Cada linha da
+// ficha (data-linha-ficha) entra em sequência quando o projeto
+// vira o atual do carrossel.
+// ============================================================
+export default function PainelProjeto({ projeto, primeiro }: PropsPainel) {
   return (
-    <article className="painel" aria-labelledby={`projeto-${projeto.id}`}>
-      <div className="painel-imagem">
+    <article
+      id={`projeto-${projeto.id}`}
+      className="projeto"
+      data-projeto={projeto.id}
+      aria-labelledby={`titulo-projeto-${projeto.id}`}
+    >
+      <a
+        className="projeto-quadro"
+        href={projeto.site ?? projeto.codigo}
+        target="_blank"
+        rel="noreferrer"
+        tabIndex={-1}
+        data-cursor="Ver"
+        data-quadro-galeria
+      >
         <img
           src={projeto.imagem}
           alt={projeto.descricaoImagem}
           width={1440}
           height={846}
-          loading="lazy"
+          loading={primeiro ? "eager" : "lazy"}
           decoding="async"
         />
-      </div>
-      <div className="painel-texto">
-        <p className="texto-discreto">
+      </a>
+      <div className="projeto-ficha">
+        <p className="projeto-categoria" data-linha-ficha>
           {projeto.categoria} · {projeto.contexto}
         </p>
-        <h3 id={`projeto-${projeto.id}`} className="painel-titulo">
+        <h3 id={`titulo-projeto-${projeto.id}`} className="projeto-titulo" data-linha-ficha>
           {projeto.titulo}
         </h3>
-        <p className="painel-destaque">{projeto.destaque}</p>
-        <p className="painel-descricao">{projeto.descricao}</p>
-        <ul className="etiquetas" aria-label="Tecnologias">
+        <p className="projeto-descricao" data-linha-ficha>
+          {projeto.descricao}
+        </p>
+        <ul className="projeto-tecnologias" aria-label="Tecnologias" data-linha-ficha>
           {projeto.tecnologias.map((tecnologia) => (
             <li key={tecnologia}>{tecnologia}</li>
           ))}
         </ul>
-        <div className="acoes">
+        <div className="projeto-links" data-linha-ficha>
           {projeto.site && (
-            <a className="botao" href={projeto.site} target="_blank" rel="noreferrer">
-              Abrir site
+            <a href={projeto.site} target="_blank" rel="noreferrer">
+              Ver site
             </a>
           )}
           {projeto.codigo && (
-            <a
-              className="botao botao-secundario"
-              href={projeto.codigo}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href={projeto.codigo} target="_blank" rel="noreferrer">
               Ver código
             </a>
           )}

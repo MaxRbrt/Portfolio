@@ -17,7 +17,7 @@ function criarSorteio(semente) {
 // ============================================================
 // 2. FORÇA DA BORDA (SOBEL)
 // ============================================================
-function calcularBordas(brilho, largura, altura) {
+export function calcularBordas(brilho, largura, altura) {
   const bordas = new Float32Array(largura * altura);
   const valorEm = (x, y) => {
     const xLimitado = Math.min(largura - 1, Math.max(0, x));
@@ -47,16 +47,56 @@ function calcularBordas(brilho, largura, altura) {
 }
 
 // ============================================================
-// 3. PESO ACUMULADO POR PIXEL
-// Peso = (0,15 + 0,55 · brilho + 0,6 · borda) · máscara. A base de
-// 0,15 garante pontos também nas áreas escuras do rosto.
+// 3. REALCE DA CABEÇA
+// Linhas da máscara mais estreitas que 60% da linha mais larga
+// ficam acima dos ombros (cabeça e pescoço) e recebem o fator.
+// Abaixo do limite o fator cai até 1 numa faixa de 8% da altura,
+// para a densidade não mudar de uma vez no pescoço.
 // ============================================================
-function acumularPesos({ brilho, mascara, largura, altura }) {
+function medirLarguraDasLinhas(mascara, largura, altura) {
+  const larguras = new Array(altura).fill(0);
+  for (let y = 0; y < altura; y += 1) {
+    for (let x = 0; x < largura; x += 1) {
+      larguras[y] += mascara[y * largura + x] > 0.5 ? 1 : 0;
+    }
+  }
+  return larguras;
+}
+
+function acharInicioDosOmbros(larguras) {
+  const maisLarga = Math.max(...larguras);
+  const primeiraComPessoa = larguras.findIndex((valor) => valor > 0);
+  const inicio = larguras.findIndex(
+    (valor, linha) => linha >= primeiraComPessoa && valor >= maisLarga * 0.6,
+  );
+  return inicio === -1 ? larguras.length : inicio;
+}
+
+export function calcularRealceCabeca(mascara, largura, altura, fator) {
+  const larguras = medirLarguraDasLinhas(mascara, largura, altura);
+  const inicioDosOmbros = acharInicioDosOmbros(larguras);
+  const faixaDeTransicao = Math.max(1, altura * 0.08);
+  const realce = new Float32Array(largura * altura);
+  for (let y = 0; y < altura; y += 1) {
+    const descida = Math.min(1, Math.max(0, (y - inicioDosOmbros) / faixaDeTransicao));
+    realce.fill(fator + (1 - fator) * descida, y * largura, (y + 1) * largura);
+  }
+  return realce;
+}
+
+// ============================================================
+// 4. PESO ACUMULADO POR PIXEL
+// Peso = (0,15 + 0,55 · brilho + 0,6 · borda) · máscara · realce.
+// A base de 0,15 garante pontos também nas áreas escuras do rosto.
+// ============================================================
+function acumularPesos({ brilho, mascara, realce, largura, altura }) {
   const bordas = calcularBordas(brilho, largura, altura);
   const acumulado = new Float64Array(largura * altura);
   let soma = 0;
   for (let indice = 0; indice < acumulado.length; indice += 1) {
-    soma += (0.15 + 0.55 * brilho[indice] + 0.6 * bordas[indice]) * mascara[indice];
+    const fatorRealce = realce ? realce[indice] : 1;
+    const peso = 0.15 + 0.55 * brilho[indice] + 0.6 * bordas[indice];
+    soma += peso * mascara[indice] * fatorRealce;
     acumulado[indice] = soma;
   }
   if (soma <= 0) {
@@ -80,14 +120,23 @@ function buscarPixel(acumulado, alvo) {
 }
 
 // ============================================================
-// 4. AMOSTRAGEM
+// 5. AMOSTRAGEM
 // Cada ponto é sorteado de forma independente, então qualquer
 // prefixo do resultado já é uma amostra uniforme da nuvem.
 // Saída: [x, y, z, brilho] por ponto; x/y em -0,5..0,5 com y
 // para cima, z em -0,15..0,15.
 // ============================================================
-export function amostrarPontos({ largura, altura, brilho, profundidade, mascara, total, semente }) {
-  const acumulado = acumularPesos({ brilho, mascara, largura, altura });
+export function amostrarPontos({
+  largura,
+  altura,
+  brilho,
+  profundidade,
+  mascara,
+  realce,
+  total,
+  semente,
+}) {
+  const acumulado = acumularPesos({ brilho, mascara, realce, largura, altura });
   const pesoTotal = acumulado[acumulado.length - 1];
   const sortear = criarSorteio(semente);
   const maiorLado = Math.max(largura, altura);

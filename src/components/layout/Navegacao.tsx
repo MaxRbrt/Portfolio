@@ -9,12 +9,8 @@ const links = [
 export default function Navegacao() {
   return (
     <header className="navegacao">
-      <a
-        className="navegacao-marca"
-        href="#inicio"
-        aria-label={`${perfil.monograma} ${perfil.nome}, voltar ao início`}
-      >
-        {perfil.monograma}
+      <a className="navegacao-marca" href="#inicio" aria-label={`${perfil.nome}, voltar ao início`}>
+        {perfil.nome}
       </a>
       <nav aria-label="Seções">
         <ul className="navegacao-links">
