@@ -12,6 +12,7 @@ import { useMovimentoEditorial } from "./components/motion/useMovimentoEditorial
 import { useRolagemGaleria } from "./components/motion/useRolagemGaleria";
 import { useRolagemIndustria } from "./components/motion/useRolagemIndustria";
 import { useRolagemCidade } from "./components/motion/useRolagemCidade";
+import { useNavegacaoComCortina } from "./components/motion/useNavegacaoComCortina";
 import { useRolagemSuave } from "./components/motion/useRolagemSuave";
 import { useRolagemTransicao } from "./components/motion/useRolagemTransicao";
 
@@ -25,6 +26,7 @@ export default function App() {
   useRolagemCidade();
   useMovimentoEditorial();
   useSequenciaAbertura();
+  useNavegacaoComCortina();
 
   return (
     <>
@@ -37,6 +39,7 @@ export default function App() {
       </Suspense>
       <Navegacao />
       <CursorContextual />
+      <div className="cortina" data-cortina aria-hidden="true" />
       <div id="rolagem-moldura">
         <div id="rolagem-conteudo">
           <main>

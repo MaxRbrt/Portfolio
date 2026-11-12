@@ -85,6 +85,15 @@
   transform-origin: left;
 }
 
+.cortina {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  background: var(--color-preto);
+  opacity: 0;
+  pointer-events: none;
+}
+
 .acoes {
   display: flex;
   flex-wrap: wrap;
