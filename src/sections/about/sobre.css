@@ -1,0 +1,97 @@
+/* ============================================================
+   1. GRADE DO SOBRE
+   Celular: uma coluna. Tablet: 8 colunas. Desktop: 12, com o
+   texto deslocado para a coluna 5 (DESIGN_SYSTEM.md).
+   ============================================================ */
+.sobre {
+  padding: var(--spacing-secao) var(--spacing-margem);
+}
+
+.sobre-grade {
+  display: grid;
+  max-inline-size: var(--container-max);
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.75rem, 4vw, 3.5rem) clamp(1rem, 2vw, 2rem);
+  margin-inline: auto;
+}
+
+/* ============================================================
+   2. TIPOGRAFIA
+   ============================================================ */
+.sobre-abertura {
+  max-inline-size: 22ch;
+  font-size: clamp(1.75rem, 3.6vw, 3.5rem);
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.sobre-texto {
+  max-inline-size: var(--largura-leitura);
+  color: #333333;
+  text-wrap: pretty;
+}
+
+.sobre-fatos {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.sobre-fato dt {
+  margin-block-end: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.sobre-fato dd {
+  display: grid;
+  gap: 0.25rem;
+  line-height: 1.4;
+}
+
+.sobre-data {
+  color: #333333;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+/* ============================================================
+   3. TABLET E DESKTOP
+   ============================================================ */
+@media (min-width: 48rem) {
+  .sobre-grade {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .sobre-titulo,
+  .sobre-abertura {
+    grid-column: 1 / -1;
+  }
+
+  .sobre-texto {
+    grid-column: 1 / 6;
+  }
+
+  .sobre-fatos {
+    grid-column: 6 / -1;
+  }
+}
+
+@media (min-width: 64rem) {
+  .sobre-grade {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .sobre-abertura {
+    grid-column: 5 / -1;
+  }
+
+  .sobre-texto {
+    grid-column: 5 / 10;
+  }
+
+  .sobre-fatos {
+    grid-column: 10 / -1;
+  }
+}

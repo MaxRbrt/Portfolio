@@ -1,0 +1,31 @@
+/* ============================================================
+   1. CURSOR SOBRE PROJETOS
+   Só existe com mouse e movimento liberado; o GSAP posiciona.
+   ============================================================ */
+.cursor-projeto {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cursor-projeto {
+    position: fixed;
+    z-index: 60;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    display: grid;
+    inline-size: 88px;
+    block-size: 88px;
+    place-items: center;
+    border-radius: 9999px;
+    background: var(--color-fundo);
+    color: var(--color-branco);
+    font-size: 0.875rem;
+    font-weight: 650;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-cursor] {
+    cursor: none;
+  }
+}

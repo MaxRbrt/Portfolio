@@ -1,38 +1,58 @@
 // ============================================================
-// 1. STACK
-// Tecnologias agrupadas pelo papel que cumprem no sistema.
+// 1. TECH STACK
+// Fonte: package.json, Dockerfile e README dos 18 repositórios
+// de github.com/MaxRbrt (18/11/2026) e o estágio na Transroni.
+// Só entra o que aparece em código real.
 // ============================================================
-
 export type GrupoStack = {
-  id: string;
-  titulo: string;
-  resumo: string;
-  itens: string[];
+  readonly nome: string;
+  readonly tecnologias: readonly string[];
 };
 
-export const gruposStack: GrupoStack[] = [
+export const gruposStack: readonly GrupoStack[] = [
   {
-    id: "tela",
-    titulo: "Tela",
-    resumo: "Interfaces em React e Vue, com animação quando ela ajuda a entender.",
-    itens: ["React", "TypeScript", "Vue", "React Native", "Tailwind", "three.js", "GSAP"],
+    nome: "Linguagens",
+    tecnologias: ["TypeScript", "JavaScript", "Python", "PHP", "HTML", "CSS"],
   },
   {
-    id: "servidor",
-    titulo: "Servidor",
-    resumo: "APIs REST com regras claras, validação e autenticação.",
-    itens: ["Node.js", "NestJS", "Express", "Fastify"],
+    nome: "Tela",
+    tecnologias: [
+      "React",
+      "Next.js",
+      "Vue",
+      "React Native",
+      "Expo",
+      "Tailwind",
+      "shadcn/ui",
+      "three.js",
+      "GSAP",
+      "Motion",
+    ],
   },
   {
-    id: "banco",
-    titulo: "Banco",
-    resumo: "Modelagem relacional e consultas que aguentam o dia a dia.",
-    itens: ["MySQL", "TypeORM", "Sequelize", "Firestore"],
+    nome: "Estado e rotas",
+    tecnologias: ["TanStack Query", "TanStack Router", "Pinia", "Vue Router", "React Router"],
   },
   {
-    id: "automacao",
-    titulo: "Automação",
-    resumo: "Fluxos no n8n ligando sistemas, APIs e webhooks.",
-    itens: ["n8n", "Webhooks", "APIs REST"],
+    nome: "Servidor",
+    tecnologias: ["Node.js", "NestJS", "Express", "Fastify", "Socket.IO", "Swagger", "JWT"],
   },
+  {
+    nome: "Banco",
+    tecnologias: [
+      "MySQL",
+      "PostgreSQL",
+      "TypeORM",
+      "Prisma",
+      "Sequelize",
+      "Supabase",
+      "Firebase",
+    ],
+  },
+  {
+    nome: "Testes",
+    tecnologias: ["Vitest", "Jest", "Playwright", "Testing Library", "MSW"],
+  },
+  { nome: "Automação", tecnologias: ["n8n", "Webhooks", "APIs REST"] },
+  { nome: "Ferramentas", tecnologias: ["Git", "GitHub", "Docker", "Vite", "pnpm"] },
 ];

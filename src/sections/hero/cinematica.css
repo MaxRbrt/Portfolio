@@ -1,0 +1,70 @@
+/* ============================================================
+   1. FRASE EDITORIAL (ESTADO ESTÁTICO)
+   Sem animação, a frase é um bloco normal abaixo do Hero.
+   ============================================================ */
+.cinematica {
+  position: relative;
+  background: var(--color-fundo);
+  color: var(--color-branco);
+}
+
+.cinematica-frase-palco {
+  max-inline-size: var(--container-max);
+  margin-inline: auto;
+  padding: var(--spacing-secao) var(--spacing-margem);
+}
+
+.cinematica-frase {
+  font-size: var(--tamanho-h2);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.cinematica-mascara {
+  display: block;
+  overflow: clip;
+  padding-block-end: 0.06em;
+}
+
+.cinematica-linha {
+  display: block;
+}
+
+/* ============================================================
+   2. FRASE SOBRE O PALCO PRESO (DESKTOP COM MOVIMENTO)
+   ============================================================ */
+.cinematica[data-cinematica="ativa"] .cinematica-frase-palco {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  align-items: center;
+  max-inline-size: none;
+  padding-block: 0;
+  pointer-events: none;
+}
+
+.cinematica[data-cinematica="ativa"] .cinematica-frase {
+  inline-size: min(100%, var(--container-max));
+  margin-inline: auto;
+  transform-origin: left center;
+}
+
+/* ============================================================
+   3. CORTINA CIRCULAR ATÉ O SOBRE
+   Só existe com a cinemática ativa; a cor é a do Sobre.
+   ============================================================ */
+.cinematica-cortina {
+  display: none;
+}
+
+.cinematica[data-cinematica="ativa"] .cinematica-cortina {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: block;
+  background: var(--color-claro);
+  clip-path: circle(0% at 50% 55%);
+  pointer-events: none;
+}

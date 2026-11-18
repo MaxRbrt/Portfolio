@@ -1,0 +1,159 @@
+/* ============================================================
+   1. BASE
+   ============================================================ */
+html {
+  background: var(--color-fundo);
+  color: var(--color-branco);
+  font-family: var(--font-sans);
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  font-size: var(--tamanho-corpo);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   2. FOCO E MOVIMENTO
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   3. SEÇÕES E TIPOGRAFIA
+   ============================================================ */
+.secao-escura {
+  background: var(--color-fundo);
+  color: var(--color-branco);
+}
+
+.secao-cinza {
+  background: var(--color-fundo-2);
+  color: var(--color-branco);
+}
+
+.secao-clara {
+  background: var(--color-claro);
+  color: var(--color-fundo);
+}
+
+.titulo-monumental {
+  font-size: min(var(--tamanho-h1), 15vw);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+}
+
+/* ============================================================
+   4. TROCA DE TOM ENTRE SEÇÕES
+   A seção pinta a cor da anterior; o fundo próprio fica numa
+   camada atrás do conteúdo, recortada pela animação.
+   ============================================================ */
+[data-transicao] {
+  position: relative;
+  isolation: isolate;
+}
+
+[data-transicao="de-clara"] {
+  background: var(--color-claro);
+}
+
+[data-transicao="de-cinza"] {
+  background: var(--color-fundo-2);
+}
+
+.secao-fundo {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+}
+
+.secao-cinza > .secao-fundo {
+  background: var(--color-fundo-2);
+}
+
+.secao-escura > .secao-fundo {
+  background: var(--color-fundo);
+}
+
+/* ============================================================
+   5. UTILITÁRIOS COMPARTILHADOS
+   ============================================================ */
+.texto-leitor {
+  position: absolute;
+  overflow: hidden;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.link-seta {
+  display: inline-block;
+  transition: transform 220ms var(--ease-saida);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  a:hover > .link-seta {
+    transform: translate(4px, -4px);
+  }
+}
+
+.botao-pilula {
+  display: inline-flex;
+  min-block-size: 44px;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid currentColor;
+  border-radius: 9999px;
+  padding-inline: 1.15rem;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  white-space: nowrap;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.titulo-secao {
+  font-size: min(var(--tamanho-h2), 18vw);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+}
+
+.mascara-linha {
+  display: block;
+  overflow: clip;
+  padding-block-end: 0.08em;
+}
+
+.linha-revelada {
+  display: block;
+}
+
+.lista-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}

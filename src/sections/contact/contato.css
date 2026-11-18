@@ -1,0 +1,128 @@
+/* ============================================================
+   1. SEÇÃO CONTATO
+   ============================================================ */
+.contato {
+  display: grid;
+  min-block-size: 100svh;
+  grid-template-rows: 1fr auto;
+  padding: var(--spacing-secao) var(--spacing-margem) 0;
+}
+
+.contato-conteudo {
+  display: grid;
+  inline-size: 100%;
+  max-inline-size: var(--container-max);
+  align-content: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  margin-inline: auto;
+}
+
+.contato-titulo {
+  font-size: min(var(--tamanho-h1), 19vw);
+}
+
+.contato-acoes {
+  display: grid;
+  justify-items: start;
+  gap: 1.25rem;
+}
+
+.contato-chamada {
+  max-inline-size: 36ch;
+  color: var(--color-texto-2);
+}
+
+.contato-email {
+  max-inline-size: 100%;
+  font-size: clamp(1.375rem, 4vw, 3rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+}
+
+.contato-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.contato-copiar {
+  background: var(--color-branco);
+  color: var(--color-fundo);
+  border-color: var(--color-branco);
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contato-botoes .botao-pilula:hover {
+    background: var(--color-branco);
+    color: var(--color-fundo);
+  }
+
+  .contato-botoes .contato-copiar:hover {
+    background: transparent;
+    color: var(--color-branco);
+  }
+
+  .contato-email:hover {
+    text-decoration-thickness: 4px;
+  }
+}
+
+.contato-aviso {
+  min-block-size: 1.6em;
+  color: var(--color-texto-2);
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 64rem) {
+  .contato-conteudo {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: end;
+  }
+
+  .contato-titulo {
+    grid-column: 1 / 8;
+  }
+
+  .contato-acoes {
+    grid-column: 8 / -1;
+  }
+}
+
+/* ============================================================
+   2. RODAPÉ
+   ============================================================ */
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  inline-size: 100%;
+  max-inline-size: var(--container-max);
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin: clamp(3rem, 8vw, 6rem) auto 0;
+  border-block-start: 1px solid var(--color-borda);
+  padding-block: 1.25rem;
+  color: var(--color-texto-2);
+  font-size: 0.875rem;
+}
+
+.rodape-topo {
+  display: inline-flex;
+  min-block-size: 44px;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-branco);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .rodape-topo:hover > .link-seta {
+    transform: translateY(-4px);
+  }
+}

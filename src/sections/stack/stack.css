@@ -1,0 +1,77 @@
+/* ============================================================
+   1. SEÇÃO TECH STACK
+   Desktop: categoria 1–3, tecnologias em texto grande 4–12.
+   ============================================================ */
+.stack {
+  padding: var(--spacing-secao) var(--spacing-margem);
+}
+
+.stack-conteudo {
+  max-inline-size: var(--container-max);
+  margin-inline: auto;
+}
+
+.stack-grupos {
+  margin-block-start: clamp(2.5rem, 6vw, 5rem);
+}
+
+.stack-grupo {
+  display: grid;
+  gap: 0.5rem;
+  border-block-start: 1px solid var(--color-borda);
+  padding-block: clamp(1.25rem, 3vw, 2rem);
+}
+
+.stack-nome {
+  color: var(--color-texto-2);
+  font-size: 0.9375rem;
+  font-weight: 650;
+}
+
+.stack-tecnologias ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5em;
+  font-size: clamp(1.5rem, 3.4vw, 3.25rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.stack-tecnologias li:not(:last-child)::after {
+  color: var(--color-cinza);
+  content: ",";
+}
+
+/* ============================================================
+   2. DESTAQUE NO HOVER
+   A tecnologia sob o mouse fica; as outras apagam.
+   ============================================================ */
+@media (hover: hover) and (pointer: fine) {
+  .stack-tecnologias li {
+    transition: opacity 200ms ease;
+  }
+
+  .stack-grupos:has(li:hover) li:not(:hover) {
+    opacity: 0.25;
+  }
+}
+
+/* ============================================================
+   3. DESKTOP
+   ============================================================ */
+@media (min-width: 64rem) {
+  .stack-grupo {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0 clamp(1rem, 2vw, 2rem);
+    align-items: baseline;
+  }
+
+  .stack-nome {
+    grid-column: 1 / 4;
+  }
+
+  .stack-tecnologias {
+    grid-column: 4 / -1;
+  }
+}

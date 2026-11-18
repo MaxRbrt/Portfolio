@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./base.css";
+@import "../components/layout/cabecalho.css";
+@import "../components/layout/cursor-projeto.css";
+@import "../sections/hero/hero.css";
+@import "../sections/hero/cinematica.css";
+@import "../sections/about/sobre.css";
+@import "../sections/projects/projetos.css";
+@import "../sections/experience/experiencia.css";
+@import "../sections/stack/stack.css";
+@import "../sections/contact/contato.css";
