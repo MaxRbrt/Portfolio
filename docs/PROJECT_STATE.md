@@ -1,44 +1,57 @@
 # Estado do projeto
 
-Atualizado em 2026-11-18.
+Atualizado em 2026-11-19.
 
 ## Task atual
 
-TASK 07, Sobre. Status: TODO.
+TASK 12, responsividade e acessibilidade. Status: IN_PROGRESS. Testes feitos; falta a correção
+do `aria-label` proibido na frase da cinemática.
 
 ## Última task concluída
 
-TASK 06, transição cinematográfica. A TASK 05 (Hero) foi revisada e fechada junto.
+TASK 11, contato e rodapé. As animações de rolagem e interação (D15) foram aprovadas e enviadas
+ao GitHub depois dela.
 
 ## Implementações existentes
 
-- Base em `src/app/` e `src/styles/`: tokens Tailwind e fontes locais. O Vite usa a base
-  `/Portfolio/`.
-- Header fixo com seção ativa e tema. No celular, menu em diálogo.
+- Base em `src/app/` e `src/styles/`: tokens, fontes locais (@fontsource) e base `/Portfolio/`.
+- Header fixo com seção ativa e tema. No celular, menu em diálogo de tela inteira.
 - Hero com busto 3D (R3F, `frameloop="demand"`) que segue o cursor no desktop, com fallback em
-  webp. A entrada usa GSAP.
+  webp.
 - `Cinematica.tsx` envolve o Hero:
-  - no desktop, prende a seção por 200% da altura da tela;
-  - o título sai e o busto gira por `grupoScroll` (`src/animation/progressoCinematica.ts`);
-  - a frase "CODE WITH PURPOSE." entra;
-  - no celular, a frase só é revelada, sem pin;
-  - com movimento reduzido, a frase fica estática.
-- Sobre, Projetos, Experiência, Stack e Contato ainda são placeholders.
+  - desktop (≥ 64rem): pin por 300% da altura, em três atos (título se desfaz, busto de perfil e
+    frase "CODE WITH PURPOSE.", círculo claro que emenda no Sobre);
+  - celular e tablet: versão leve sem pin;
+  - movimento reduzido: frase estática, sem canvas.
+- Sobre, Selected Work (17 projetos: 5 destaques e 12 em "Ver mais"; carrossel no celular),
+  Experiência, Tech Stack e Contato com conteúdo real.
+- Animações: revelação ao entrar na tela, títulos letra por letra, troca de tom entre seções,
+  parallax dos projetos, cursor com rótulo sobre os projetos, botões magnéticos e e-mail embaralhado ao
+  copiar. Catálogo em `ANIMATIONS.md`.
 
 ## Decisões tomadas
 
-Ver `DECISIONS.md`, decisões D01 a D12.
+Ver `DECISIONS.md`, decisões D01 a D16.
 
 ## Problemas e bloqueios
 
-- Favicon com 404, para a TASK 14.
-- Chunk 3D grande e Lighthouse, para a TASK 13.
-- Faltam conteúdos, listados em `CONTENT.md`.
+- `aria-label` proibido no `<p>` da frase da cinemática (SplitText). Correção proposta na
+  TASK 12, aguardando aprovação.
+- Lighthouse mobile: Performance 77, LCP 4,5 s (imagem do busto depois do JS). TASK 13.
+- Sem favicon (404 de `/favicon.ico`), sem description, Open Graph e canonical. TASK 14.
+- Commit e publicação precisam de autorização do autor.
+
+## Publicação
+
+TASK 15 concluída em 2026-11-19 (D16). Todo push na `main` publica em
+https://maxrbrt.github.io/Portfolio/ pelo `.github/workflows/deploy.yml`.
 
 ## Testes executados
 
-Ver `QA_REPORT.md`, seções da TASK 05 e da TASK 06.
+Ver `QA_REPORT.md`, seções da TASK 12 e da TASK 13 (medição inicial).
 
 ## Próxima ação exata
 
-TASK 07: criar `src/sections/about/` com o conteúdo real de `CONTENT.md`, em seção clara.
+Com aprovação: aplicar `aria: "hidden"` no `SplitText.create` de `separarLetras`
+(`src/sections/hero/Cinematica.tsx`), repetir o Lighthouse e fechar a TASK 12. Depois, TASK 13:
+adiantar o carregamento da imagem do busto (preload) e medir de novo.

@@ -118,6 +118,25 @@
 - Celular (abaixo de 48rem): destaques e "Mais projetos" viram carrosséis de rolagem lateral nativa
   (scroll-snap), com setas e contador. Sem biblioteca de carrossel.
 
-## Em aberto
+## D15 — Animações de rolagem e interação em quatro etapas (2026-11-18)
 
-- Destino do workflow antigo `deploy-pages.yml` e da branch remota `fix/github-pages-animations`: TASK 03.
+- Pedido do autor: mais movimento na rolagem, no nível das referências.
+- Decisão, aprovada etapa por etapa:
+  1. cinemática em três atos com pin de 300% e cortina circular (ANIM-CINE-01);
+  2. títulos letra por letra e troca de tom entre seções (ANIM-TITULO-01, ANIM-TRANSICAO-01);
+  3. projetos com máscara e parallax no desktop (ANIM-PROJ-01);
+  4. cursor com rótulo, botões magnéticos e e-mail embaralhado (ANIM-CURSOR-01, ANIM-IMA-01,
+     ANIM-EMAIL-01).
+- Regras mantidas: GSAP único dono (D05), só `transform`, `opacity` e `clip-path`, interação só
+  com ponteiro fino e nada com movimento reduzido.
+- Impacto: substitui a linha do tempo 0–20–50–80–100 e o pin de 200% da TASK 06.
+
+## D16 — Deploy por GitHub Actions (2026-11-19)
+
+- Situação: o Pages publica pelo modo "workflow", mas o `deploy-pages.yml` saiu na TASK 03 e o
+  site continuou na versão antiga.
+- Decisão: `.github/workflows/deploy.yml` roda lint, testes e build e publica `dist/` a cada push
+  na `main`. Actions em versões com Node 24.
+- Limpeza autorizada pelo autor: `dist/index.html` sai do Git (já estava no `.gitignore`) e a
+  branch remota `fix/github-pages-animations`, sem commit fora da `main` e com PR já mesclado,
+  foi apagada.

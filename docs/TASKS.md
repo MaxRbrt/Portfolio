@@ -55,7 +55,7 @@ visual de `TESTING.md` e registro em `QA_REPORT.md`.
 ## TASK 05 — Hero principal — DONE
 
 - Dependências: 04.
-- Subtarefas: composição em camadas; timeline de entrada; cabeça 3D procedural; cursor; fallback; reduced motion.
+- Subtarefas: composição em camadas; timeline de entrada; busto 3D (`busto-marmore.glb`, ver `ASSETS.md`); cursor; fallback; reduced motion.
 - Arquivos: `src/sections/hero/*`, `src/components/three/*`, `src/hooks/useCursorNormalizado.ts`.
 - Aceite: H1 legível com modelo sobreposto; rotação dentro dos limites; sem `setState` por frame; sem WebGL funciona.
 - Testes: mover cursor, sair da área, reduced motion, WebGL desligado, resize.
@@ -110,13 +110,18 @@ visual de `TESTING.md` e registro em `QA_REPORT.md`.
 - Subtarefas: matriz de viewports de `TESTING.md`; teclado; foco; contraste; reduced motion; sem WebGL.
 - Aceite: sem overflow, sem corte, sem sobreposição; WCAG 2.2 AA verificado.
 - Testes: Playwright em todos os viewports; axe; navegação por teclado.
+- Estado: matriz de viewports, teclado, menu, movimento reduzido e sem WebGL verificados em
+  2026-11-18 (`QA_REPORT.md`). Falta corrigir o `aria-label` proibido na frase da cinemática
+  (correção proposta, aguardando aprovação).
 
-## TASK 13 — Performance — TODO
+## TASK 13 — Performance — IN_PROGRESS
 
 - Dependências: 12.
 - Subtarefas: code splitting; imagens e GLB otimizados; DPR adaptativo; pausar cena fora da tela; Lighthouse no build.
 - Aceite: metas de `PROJECT.md` (RNF02) medidas e registradas com condições do teste, ou desvios justificados.
 - Testes: Lighthouse mobile no `preview`; registro de throttling e viewport.
+- Estado: primeira medição registrada (Performance 77, LCP 4,5 s). O LCP é a imagem do busto,
+  que só carrega depois do JS. O antivírus da máquina interfere na medição.
 
 ## TASK 14 — SEO e metadados — TODO
 
@@ -125,8 +130,10 @@ visual de `TESTING.md` e registro em `QA_REPORT.md`.
   JSON-LD Person só com dados confirmados.
 - Aceite: sem placeholder em metadado.
 - Testes: inspeção do HTML gerado; validação de Open Graph.
+- Estado: o `index.html` atual só tem `title` e `color-scheme`. Faltam description, Open Graph,
+  canonical e favicon (o navegador pede `/favicon.ico` e recebe 404).
 
-## TASK 15 — GitHub Pages — TODO
+## TASK 15 — GitHub Pages — DONE
 
 - Dependências: 14.
 - Subtarefas: `.github/workflows/deploy.yml` (checkout, Node, `npm ci`, typecheck, lint, test, build, upload, deploy);
@@ -134,4 +141,7 @@ visual de `TESTING.md` e registro em `QA_REPORT.md`.
 - Aceite: build com a base de produção abre sem 404 de asset; publicação só com autorização.
 - Testes: `vite preview` com a base; checagem de caminhos.
 - Observação: repositório atual `MaxRbrt/Portfolio` é de projeto, então base `/Portfolio/`.
-  O workflow antigo `deploy-pages.yml` foi removido da árvore de trabalho na TASK 03.
+- Estado: `.github/workflows/deploy.yml` publica a cada push na `main` (lint, testes, build,
+  deploy). Primeiro deploy da versão nova em 2026-11-19, conferido no navegador. Actions em
+  versões com Node 24. `dist/index.html` saiu do Git e a branch `fix/github-pages-animations`
+  foi apagada (D16).
