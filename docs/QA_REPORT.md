@@ -171,10 +171,24 @@ Somente testes realmente executados. Teste não feito é `NOT RUN`.
 - Console: só o 404 de `/favicon.ico` (o `index.html` não declara ícone). Fica para a TASK 14.
 - Defeito comprovado (Lighthouse/axe, `aria-prohibited-attr`): o SplitText da cinemática grava
   `aria-label` no `<p class="cinematica-frase">`, e `aria-label` não é permitido em parágrafo.
-  Correção proposta: `aria: "hidden"` no `SplitText.create` de `separarLetras`
-  (`src/sections/hero/Cinematica.tsx`), que deixa uma cópia do texto só para o leitor de tela.
-  Aguarda aprovação.
+  Corrigido em 2026-11-19 (ver abaixo).
 - NOT RUN: leitor de tela real; trackpad real; dispositivo móvel físico.
+
+### Correção do `aria-label` da frase — 2026-11-19
+
+- Reprodução no site publicado (árvore de acessibilidade, Playwright): no desktop e no celular a
+  frase chegava como `paragraph` sem texto, porque o navegador ignora `aria-label` em `<p>` e as
+  letras estavam com `aria-hidden`. O leitor de tela não lia a frase.
+- A proposta anterior (`aria: "hidden"` em `separarLetras`) foi descartada: esconderia também o H1.
+- Correção: a frase ganhou uma cópia em `.texto-leitor`, as linhas visíveis ficaram com
+  `aria-hidden` e o SplitText da frase passou a usar `aria: "none"` sobre `.cinematica-linha`.
+  O H1 continua com `aria: "auto"` (`aria-label` é permitido em heading).
+- Depois (build local): `paragraph: CODE WITH PURPOSE.` e `heading "FULL STACK DEVELOPER."` em
+  desktop, celular e movimento reduzido; frase sem `aria-label`; 16 letras animadas.
+- Validação visual no navegador (1510×812): letras da frase sobem com a rolagem e a cortina nasce
+  no ponto final, como antes. Console sem erro além do 404 do favicon.
+- Lighthouse só acessibilidade (build local, desktop headless): 100, nenhuma auditoria falhando.
+- typecheck, eslint e prettier do arquivo e build passaram.
 
 ## TASK 13 — medição inicial — 2026-11-18
 

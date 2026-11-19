@@ -104,15 +104,15 @@ visual de `TESTING.md` e registro em `QA_REPORT.md`.
 - Aceite: copiar e-mail com feedback `aria-live`; retorno ao topo; sem formulário fictício; sem dependência de API externa.
 - Testes: clipboard negado (fallback), teclado.
 
-## TASK 12 — Responsividade e acessibilidade — IN_PROGRESS
+## TASK 12 — Responsividade e acessibilidade — DONE
 
 - Dependências: 11.
 - Subtarefas: matriz de viewports de `TESTING.md`; teclado; foco; contraste; reduced motion; sem WebGL.
 - Aceite: sem overflow, sem corte, sem sobreposição; WCAG 2.2 AA verificado.
 - Testes: Playwright em todos os viewports; axe; navegação por teclado.
 - Estado: matriz de viewports, teclado, menu, movimento reduzido e sem WebGL verificados em
-  2026-11-18 (`QA_REPORT.md`). Falta corrigir o `aria-label` proibido na frase da cinemática
-  (correção proposta, aguardando aprovação).
+  2026-11-18 (`QA_REPORT.md`). Frase da cinemática corrigida em 2026-11-19: o leitor de tela
+  passou a ler "CODE WITH PURPOSE."; Lighthouse de acessibilidade em 100.
 
 ## TASK 13 — Performance — IN_PROGRESS
 

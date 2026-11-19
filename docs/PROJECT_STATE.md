@@ -4,13 +4,12 @@ Atualizado em 2026-11-19.
 
 ## Task atual
 
-TASK 12, responsividade e acessibilidade. Status: IN_PROGRESS. Testes feitos; falta a correção
-do `aria-label` proibido na frase da cinemática.
+TASK 13, performance. Status: IN_PROGRESS.
 
 ## Última task concluída
 
-TASK 11, contato e rodapé. As animações de rolagem e interação (D15) foram aprovadas e enviadas
-ao GitHub depois dela.
+TASK 12, responsividade e acessibilidade (2026-11-19). A frase da cinemática agora é lida pelo
+leitor de tela; Lighthouse de acessibilidade em 100.
 
 ## Implementações existentes
 
@@ -35,8 +34,6 @@ Ver `DECISIONS.md`, decisões D01 a D16.
 
 ## Problemas e bloqueios
 
-- `aria-label` proibido no `<p>` da frase da cinemática (SplitText). Correção proposta na
-  TASK 12, aguardando aprovação.
 - Lighthouse mobile: Performance 77, LCP 4,5 s (imagem do busto depois do JS). TASK 13.
 - Sem favicon (404 de `/favicon.ico`), sem description, Open Graph e canonical. TASK 14.
 - Commit e publicação precisam de autorização do autor.
@@ -52,6 +49,5 @@ Ver `QA_REPORT.md`, seções da TASK 12 e da TASK 13 (medição inicial).
 
 ## Próxima ação exata
 
-Com aprovação: aplicar `aria: "hidden"` no `SplitText.create` de `separarLetras`
-(`src/sections/hero/Cinematica.tsx`), repetir o Lighthouse e fechar a TASK 12. Depois, TASK 13:
-adiantar o carregamento da imagem do busto (preload) e medir de novo.
+TASK 13: adiantar o carregamento da imagem do busto (preload) e medir de novo o Lighthouse
+mobile, de preferência na página publicada (sem a injeção do antivírus).
