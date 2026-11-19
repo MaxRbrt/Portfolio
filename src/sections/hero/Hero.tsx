@@ -112,7 +112,14 @@ export function Hero() {
 
         <div className="hero-arte" aria-hidden="true">
           <div className="hero-arte-palco">
-            <img className="hero-busto" src={imagemBustoHero} alt="" width="760" height="760" />
+            <img
+              className="hero-busto"
+              src={imagemBustoHero}
+              alt=""
+              width="760"
+              height="760"
+              fetchPriority="high"
+            />
             {cenaDisponivel && (
               <LimiteCenaHero>
                 <Suspense fallback={null}>

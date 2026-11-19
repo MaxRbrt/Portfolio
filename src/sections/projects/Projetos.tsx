@@ -19,8 +19,8 @@ type PropsItemProjeto<T extends Projeto> = {
   readonly ordem: number;
 };
 
-const tamanhosImagemDestaque = "(min-width: 64rem) 50vw, 100vw";
-const tamanhosImagemGaleria = "(min-width: 48rem) 50vw, 100vw";
+const tamanhosImagemDestaque = "(min-width: 64rem) 50vw, (min-width: 48rem) 100vw, 80vw";
+const tamanhosImagemGaleria = "(min-width: 48rem) 50vw, 80vw";
 const inicioGaleria = projetosDestaque.length;
 const inicioSemImagem = inicioGaleria + projetosGaleria.length;
 const totalMaisProjetos = projetosGaleria.length + projetosSemImagem.length;
