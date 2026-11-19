@@ -10,16 +10,23 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 const midiaCinematicaCompleta = "(min-width: 64rem) and (prefers-reduced-motion: no-preference)";
 const midiaCinematicaLeve = "(max-width: 63.99rem) and (prefers-reduced-motion: no-preference)";
 
+const seletorTitulo = ".hero-titulo";
+const seletorLinhasFrase = ".cinematica-frase .cinematica-linha";
+
 // ============================================================
 // 1. LETRAS DO TÍTULO E DA FRASE
-// SplitText guarda o texto original em aria-label e esconde as
-// letras soltas do leitor de tela.
+// No título (heading), SplitText guarda o texto em aria-label e
+// esconde as letras soltas. A frase é um <p>, onde aria-label é
+// proibido: o leitor de tela lê a cópia em .texto-leitor e as
+// linhas visíveis já ficam com aria-hidden no JSX.
 // ============================================================
-function separarLetras(palco: HTMLElement, seletor: string) {
-  const alvo = palco.querySelector<HTMLElement>(seletor);
-  if (!alvo) throw new Error(`Elemento "${seletor}" não encontrado no palco da cinemática`);
+function separarLetras(palco: HTMLElement, seletor: string, aria: "auto" | "none") {
+  const alvos = Array.from(palco.querySelectorAll<HTMLElement>(seletor));
+  if (alvos.length === 0) {
+    throw new Error(`Elemento "${seletor}" não encontrado no palco da cinemática`);
+  }
 
-  return SplitText.create(alvo, { type: "words,chars", charsClass: "letra" });
+  return SplitText.create(alvos, { type: "words,chars", charsClass: "letra", aria });
 }
 
 // ============================================================
@@ -68,8 +75,8 @@ function calcularOrigemCortina(palco: HTMLElement, frase: HTMLElement, ponto: HT
 // ============================================================
 function montarCinematicaCompleta(palco: HTMLElement) {
   palco.dataset.cinematica = "ativa";
-  const letrasTitulo = separarLetras(palco, ".hero-titulo");
-  const letrasFrase = separarLetras(palco, ".cinematica-frase");
+  const letrasTitulo = separarLetras(palco, seletorTitulo, "auto");
+  const letrasFrase = separarLetras(palco, seletorLinhasFrase, "none");
   const frase = palco.querySelector<HTMLElement>(".cinematica-frase");
   const pontoFinal = letrasFrase.chars.at(-1);
   const origemCortina = () =>
@@ -134,8 +141,8 @@ function montarCinematicaCompleta(palco: HTMLElement) {
 // sai da tela; depois as letras da frase sobem com a rolagem.
 // ============================================================
 function montarCinematicaLeve(palco: HTMLElement) {
-  const letrasTitulo = separarLetras(palco, ".hero-titulo");
-  const letrasFrase = separarLetras(palco, ".cinematica-frase");
+  const letrasTitulo = separarLetras(palco, seletorTitulo, "auto");
+  const letrasFrase = separarLetras(palco, seletorLinhasFrase, "none");
   const saidaDoHero = { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.6 };
 
   gsap.to(letrasTitulo.chars, {
@@ -207,10 +214,11 @@ export function Cinematica() {
       <Hero />
       <div className="cinematica-frase-palco">
         <p lang="en" className="cinematica-frase">
-          <span className="cinematica-mascara">
+          <span className="texto-leitor">CODE WITH PURPOSE.</span>
+          <span className="cinematica-mascara" aria-hidden="true">
             <span className="cinematica-linha">CODE WITH</span>
           </span>{" "}
-          <span className="cinematica-mascara">
+          <span className="cinematica-mascara" aria-hidden="true">
             <span className="cinematica-linha">PURPOSE.</span>
           </span>
         </p>
