@@ -35,8 +35,8 @@ Ver `DECISIONS.md`, decisões D01 a D16.
 ## Problemas e bloqueios
 
 - Lighthouse local sofre com o script do antivírus; medir performance pelo PageSpeed Insights.
-- Rolagem horizontal no desktop depois do ato 3 da cinemática (frase escalada passa da borda).
-  Correção proposta: `overflow-x: clip` no palco. Aguarda aprovação.
+- `scrollWidth` maior que a tela depois do pin da cinemática, sem rolagem visível para o
+  usuário (ver `QA_REPORT.md`, TASK 13). Correção conhecida: `overflow-x: clip` no palco ativo.
 - Sem favicon (404 de `/favicon.ico`), sem description, Open Graph e canonical. TASK 14.
 - Commit e publicação precisam de autorização do autor.
 
@@ -51,4 +51,4 @@ Ver `QA_REPORT.md`, seções da TASK 12 e da TASK 13.
 
 ## Próxima ação exata
 
-Com aprovação, corrigir a rolagem horizontal da cinemática. Depois, TASK 14 (SEO e favicon).
+TASK 14 (SEO e favicon).

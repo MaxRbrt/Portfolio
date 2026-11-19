@@ -227,10 +227,13 @@ Somente testes realmente executados. Teste não feito é `NOT RUN`.
 - Escolha de imagem (Playwright): 390 px DPR 3 usa 1440 (301 px CSS), 412 px DPR 1,75 usa 720,
   800 px DPR 2 usa 2880 (sem mudança), 1440 px DPR 1 usa 720 (sem mudança). Busto carregado e
   nenhum erro de página nos quatro.
-- Defeito comprovado, preexistente (igual na página publicada): no desktop 1440, depois do ato 3
-  da cinemática, `scrollWidth` vai a 1507 px. A frase escalada (`scale` com origem à esquerda)
-  passa da borda direita e cria rolagem horizontal. Correção proposta: `overflow-x: clip` no
-  palco da cinemática. Aguarda aprovação.
+- Risco não confirmado, preexistente: depois que o pin da cinemática solta, `scrollWidth` vai a
+  1065 px (1024), 1507 px (1440) e 1920 px (1920), porque a frase escalada passa da borda
+  direita. Investigado em 2026-11-19: o `overflow-x: clip` do `body` é propagado para a
+  viewport, então não há barra horizontal e a roda horizontal do mouse não move a página
+  (`scrollX` 0). Só `window.scrollTo` com x consegue deslocar (67 px), e nenhum código do site
+  faz isso. `overflow-x: clip` no palco ativo zera o excesso nas três larguras (testado com CSS
+  injetado), mas não foi aplicado por não haver efeito visível para quem usa o site.
 - Página publicada com a correção, PageSpeed Insights (2026-11-19 08:54, celular, Moto G Power
   emulado, Lighthouse 13.6, 4G lenta, sem antivírus): Performance 99, Accessibility 100, Best
   Practices 100, SEO 91. FCP 0,8 s, LCP 1,8 s, TBT 120 ms, CLS 0, Speed Index 1,3 s. Metas de
