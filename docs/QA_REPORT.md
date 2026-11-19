@@ -141,3 +141,56 @@ Somente testes realmente executados. Teste não feito é `NOT RUN`.
   320 e 27/24 px em 375.
 - Console sem erros após recarga.
 - NOT RUN: foco visível com teclado real (fica para a TASK 12).
+
+## TASK 12 — 2026-11-18
+
+- `npm run typecheck`, `npm run lint`, `npm test` e `npm run build`: código de saída 0, em
+  sequência. O Vitest não tem arquivo de teste no projeto (`--passWithNoTests`).
+- Ambiente: `vite preview` do build na porta 4173, base `/Portfolio/`. Chrome instalado,
+  controlado por Playwright (a extensão do navegador não emula movimento reduzido nem desliga o
+  WebGL).
+- Matriz de viewports (1920×1080, 1440×900, 1366×768, 1024×768, 768×1024, 430×932, 390×844,
+  375×667, 320×640), rolando a página até o fim:
+  - os 42 elementos com `data-revelar` terminam com opacidade 1 em todas;
+  - pin e canvas só a partir de 1024 px; abaixo disso, versão leve, sem pin e sem canvas;
+  - de 320 a 768 px, `scrollWidth` igual à largura da tela;
+  - de 1024 a 1440 px, `scrollWidth` passa da tela (1507 em 1440) a partir do pin. Causa: a frase
+    "CODE WITH PURPOSE." termina com `scale(1.1)` a partir da esquerda e sai 67 px pela direita.
+    O `overflow-x: clip` do `body` corta o excesso; a roda do mouse não rola na horizontal
+    (`scrollX` 0). Só `scrollTo` por script chega a 67 px. Classificado como risco não
+    confirmado. Em 1920 não acontece.
+- Movimento reduzido (1440×900): sem pin, sem canvas (fica a imagem do busto), conteúdo visível
+  sem rolar, cursor de projeto com `display: none`, console sem erros.
+- WebGL desligado (`--disable-webgl --disable-3d-apis`), em 1440 e 390: sem canvas, imagem
+  `busto-marmore.webp` carregada (576×576 e 351×351), página rola até o fim sem erro de script.
+- Teclado (1440×900): a ordem do Tab segue "Ir para o conteúdo", logo, navegação, CTAs do Hero,
+  links dos 3 projetos em destaque, "Ver mais projetos", e-mail, copiar, LinkedIn, GitHub e
+  "Voltar ao topo". Todos com anel de foco visível e dentro da tela ao receber foco.
+- Menu no celular (390×844): abre em diálogo com o foco em "Início" e a rolagem travada;
+  Escape fecha e devolve o foco ao botão Menu.
+- Console: só o 404 de `/favicon.ico` (o `index.html` não declara ícone). Fica para a TASK 14.
+- Defeito comprovado (Lighthouse/axe, `aria-prohibited-attr`): o SplitText da cinemática grava
+  `aria-label` no `<p class="cinematica-frase">`, e `aria-label` não é permitido em parágrafo.
+  Correção proposta: `aria: "hidden"` no `SplitText.create` de `separarLetras`
+  (`src/sections/hero/Cinematica.tsx`), que deixa uma cópia do texto só para o leitor de tela.
+  Aguarda aprovação.
+- NOT RUN: leitor de tela real; trackpad real; dispositivo móvel físico.
+
+## TASK 13 — medição inicial — 2026-11-18
+
+- Lighthouse 12.8.2, mobile, throttling simulado, tela 412×823, Chrome headless, no `vite preview`
+  (`http://127.0.0.1:4173/Portfolio/`).
+- Notas: Performance 77, Accessibility 97, Best Practices 79, SEO 91.
+- Métricas: FCP 3,2 s, LCP 4,5 s, TBT 150 ms, CLS 0,016, Speed Index 3,2 s.
+- LCP: imagem `img.hero-busto`; 40% do tempo é atraso de carregamento (a imagem só entra depois
+  do JS).
+- Interferência da máquina: o antivírus (Kaspersky) injeta um script de 174 kB por `http` em toda
+  página. Ele aparece como recurso que bloqueia a renderização (2,5 s estimados) e é a causa do
+  "is-on-https" em Best Practices. A medição sem essa injeção fica para a página publicada ou
+  outra máquina.
+- Falhas do próprio site: `aria-prohibited-attr` (ver TASK 12), 404 do favicon
+  (`errors-in-console`) e falta de `meta description` (SEO). As duas últimas são da TASK 14.
+- Build: chunk `CenaHero` de 967 kB (257 kB em gzip), carregado à parte do bundle principal
+  (389 kB, 131 kB em gzip).
+- Metas de `TESTING.md` ainda não atingidas: Performance ≥ 90, Best Practices ≥ 95, SEO ≥ 95,
+  LCP ≤ 2,5 s.

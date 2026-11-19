@@ -51,29 +51,69 @@ Pela D08, nenhuma animação usa rótulo de seção numerado. Os "separadores" s
 
 - Objetivo: ligar Hero → Sobre numa seção fixada com `ScrollTrigger` (`pin`, `scrub`).
 - Elementos: textos do Hero, `grupoScroll`, luzes, frase "CODE WITH PURPOSE.".
-- Linha do tempo (progresso da seção):
-  - 0–20%: textos do Hero saem; modelo muda de posição levemente.
-  - 20–50%: rotação progressiva, mudança de escala, luz controlada, transição tipográfica.
-  - 50–80%: frase editorial entra; modelo reposiciona para composição final.
-  - 80–100%: cena sai; pin é liberado; entrada natural em Sobre.
-- Easing: lineares com suavização do progresso (`scrub` numérico ≈0,6–1 s no lugar do lerp 0,12 de R02).
-  Duração: pelo scroll. Tone mapping ACES na cena (R04).
-- Reverso: obrigatório e simétrico. Desktop: completa. Mobile/dispositivo fraco: versão leve sem pin longo.
-- Reduced motion: sem pin; frase aparece estática. Fallback: seções empilhadas normais.
+- Implementado em `src/sections/hero/Cinematica.tsx` (D15). Pin de 300% da altura, `scrub: 0.8`,
+  a partir de 64rem:
+  - Ato 1 (0–30%): letras do título voam em ordem aleatória; o busto aproxima.
+  - Ato 2 (30–65%): o busto vai de perfil para a direita; a frase entra letra por letra.
+  - Ato 3 (65–100%): a frase cresce para 1,1; o busto recua; um círculo claro nasce do ponto
+    final de "PURPOSE." e cobre o palco, emendando no Sobre. A partir de 90% o cabeçalho troca
+    para o tema claro.
+- Abaixo de 64rem: sem pin; o título se desfaz e o busto recua enquanto o Hero sai; as letras da
+  frase sobem com a rolagem.
+- Reverso: simétrico, pelo `scrub`. Reduced motion: sem pin, frase estática.
+- Risco anotado (QA, TASK 12): na escala 1,1 a frase passa 67 px da borda direita em 1440 px. O
+  `overflow-x: clip` do `body` corta e o usuário não rola na horizontal.
 - Aceite: sem scroll hijacking, sem salto, sem sobreposição, limpeza total no unmount.
 
-## ANIM-ABOUT-01 — Revelação do Sobre
+## ANIM-ABOUT-01 — Revelação ao entrar na tela
 
-- Revelação por linhas (entrada na viewport, como o threshold 0,15 de R02), deslocamento vertical 24 px, máscara nos títulos, linhas que crescem na horizontal.
-- Duração 600 a 800 ms, easing `power3.out`, trigger entrada na viewport (início 85%). Reverso: não repete.
-- Sem fragmentar caracteres de forma que quebre leitor de tela (usar `aria-label` no bloco ou dividir por linhas).
-- Reduced motion: visível direto. Aceite: conteúdo presente no DOM e legível com animação desligada.
+- Implementado em `src/hooks/useRevelacaoAoEntrar.ts`, usado em todas as seções depois do Hero.
+- Marcação no HTML: `data-revelar="bloco"` sobe 24 px e aparece (700 ms); `"imagem"` abre a
+  máscara de baixo para cima (800 ms); `"mascara"` usa a ANIM-TITULO-01.
+- Easing `power3.out`, início em `top 85%`, uma vez só.
+- Reduced motion: nenhuma media query do GSAP casa e o conteúdo já está visível no DOM.
+
+## ANIM-TITULO-01 — Títulos letra por letra
+
+- SplitText em palavras e letras, com `aria: "none"`; as letras sobem de dentro da máscara
+  (`yPercent` 115, rotação 6°, 900 ms, `power4.out`, 20 ms entre letras).
+- No fim, o SplitText é desfeito para o leitor de tela ler a linha inteira.
+
+## ANIM-TRANSICAO-01 — Troca de tom entre seções
+
+- Seção com `data-transicao`: o fundo próprio (`.secao-fundo`) entra como cartão arredondado
+  (`inset(6% 3% 0% 3% round 2rem)`) e abre até a borda com a rolagem (`scrub: 0.6`).
 
 ## ANIM-WORK-01 — Imagens de projeto
 
 - Máscara de revelação (clip-path) 800 ms, zoom de hover 1 → 1,04 em 400 ms, parallax limitado ≤ 8% vertical.
 - Setas deslocam 8 px no hover; mudança de contraste suave. Mobile: sem hover, sem parallax pesado.
 - Reduced motion: sem zoom e sem parallax. Aceite: links e informações acessíveis por toque e teclado.
+
+## ANIM-PROJ-01 — Projetos em destaque (implementado)
+
+- `src/hooks/useMovimentoProjetos.ts`. Desktop (≥ 64rem): a imagem abre de
+  `inset(12% 8% 12% 8%)` até a borda; a foto (escala 1,16) desliza de −8% a 8%; o número sobe de
+  30% a −30%; os detalhes sobem 32 px com 70 ms entre si.
+- Abaixo de 64rem: sem parallax; a imagem abre de baixo e os detalhes sobem.
+- Reduced motion: nada animado.
+
+## ANIM-CURSOR-01 — Cursor com rótulo sobre os projetos
+
+- `src/components/layout/CursorProjeto.tsx`. Círculo de 88 px que segue o ponteiro (`quickTo`,
+  350 ms) e mostra o texto de `data-cursor`. Só com `(hover: hover) and (pointer: fine)` e sem
+  movimento reduzido; fora disso, `display: none`.
+
+## ANIM-IMA-01 — Botões pílula magnéticos
+
+- `src/hooks/useBotoesMagneticos.ts`. A pílula anda 30% da distância até o ponteiro (400 ms) e
+  volta com `elastic.out(1, 0.45)` ao sair. Mesma condição de ponteiro fino e sem movimento
+  reduzido.
+
+## ANIM-EMAIL-01 — E-mail embaralhado ao copiar
+
+- `src/sections/contact/Contato.tsx`. Depois de copiar, o endereço embaralha e volta
+  (ScrambleText, 600 ms). Com movimento reduzido, não embaralha.
 
 ## ANIM-PARALLAX-01 — Parallax vertical
 
