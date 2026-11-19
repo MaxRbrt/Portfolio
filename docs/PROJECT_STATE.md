@@ -34,7 +34,10 @@ Ver `DECISIONS.md`, decisões D01 a D16.
 
 ## Problemas e bloqueios
 
-- Lighthouse mobile: Performance 77, LCP 4,5 s (imagem do busto depois do JS). TASK 13.
+- Lighthouse mobile: imagem do busto já com preload (TASK 13). Medições desta máquina sofrem com
+  o script do antivírus; falta medir sem ele.
+- Rolagem horizontal no desktop depois do ato 3 da cinemática (frase escalada passa da borda).
+  Correção proposta: `overflow-x: clip` no palco. Aguarda aprovação.
 - Sem favicon (404 de `/favicon.ico`), sem description, Open Graph e canonical. TASK 14.
 - Commit e publicação precisam de autorização do autor.
 
@@ -49,5 +52,5 @@ Ver `QA_REPORT.md`, seções da TASK 12 e da TASK 13 (medição inicial).
 
 ## Próxima ação exata
 
-TASK 13: adiantar o carregamento da imagem do busto (preload) e medir de novo o Lighthouse
-mobile, de preferência na página publicada (sem a injeção do antivírus).
+Publicar a TASK 13 e medir a página publicada no PageSpeed Insights (sem o antivírus). Com
+aprovação, corrigir a rolagem horizontal da cinemática. Depois, TASK 14 (SEO e favicon).

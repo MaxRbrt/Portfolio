@@ -208,3 +208,28 @@ Somente testes realmente executados. Teste não feito é `NOT RUN`.
   (389 kB, 131 kB em gzip).
 - Metas de `TESTING.md` ainda não atingidas: Performance ≥ 90, Best Practices ≥ 95, SEO ≥ 95,
   LCP ≤ 2,5 s.
+
+## TASK 13 — preload do busto e tamanhos das imagens — 2026-11-19
+
+- Antes (página publicada, https, Lighthouse 12 mobile): Performance 83, Accessibility 100, Best
+  Practices 96, SEO 91. FCP 3,3 s, LCP 3,5 s, TBT 100 ms, CLS 0,016. LCP: `img.hero-busto`, com
+  52% do tempo em atraso de carregamento (1,8 s: a imagem só era descoberta depois do JS). O
+  antivírus injeta o script também em https (1,95 s bloqueando a renderização).
+- Celular escolhia a versão 1440 das imagens dos projetos (`sizes` dizia 100vw, mas o carrossel
+  ocupa 86% da largura). Desperdício estimado de 381 KiB.
+- Correção: `preload` da imagem do busto no `index.html` com `fetchpriority="high"` (o Vite
+  acrescenta a base `/Portfolio/`), `fetchPriority="high"` no `<img>` e `sizes` de 80vw abaixo
+  de 48rem nos destaques e na galeria.
+- Depois (build local, http, mesmo Lighthouse): Performance 80, LCP 4,0 s, FCP 3,2 s. Atraso de
+  carregamento do busto caiu de 1,8 s para 0,09 s e `prioritize-lcp-image` passou. O LCP agora
+  é quase todo atraso de renderização (3,2 s), igual ao FCP: o script do antivírus (2,6 s por
+  http) segura a primeira pintura. Imagens: sobram 42 KiB (720 é a menor versão).
+- Escolha de imagem (Playwright): 390 px DPR 3 usa 1440 (301 px CSS), 412 px DPR 1,75 usa 720,
+  800 px DPR 2 usa 2880 (sem mudança), 1440 px DPR 1 usa 720 (sem mudança). Busto carregado e
+  nenhum erro de página nos quatro.
+- Defeito comprovado, preexistente (igual na página publicada): no desktop 1440, depois do ato 3
+  da cinemática, `scrollWidth` vai a 1507 px. A frase escalada (`scale` com origem à esquerda)
+  passa da borda direita e cria rolagem horizontal. Correção proposta: `overflow-x: clip` no
+  palco da cinemática. Aguarda aprovação.
+- NOT RUN: Lighthouse sem o antivírus (outra máquina ou PageSpeed Insights) e medição da página
+  publicada com esta correção.

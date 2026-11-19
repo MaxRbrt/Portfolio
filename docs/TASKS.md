@@ -122,6 +122,8 @@ visual de `TESTING.md` e registro em `QA_REPORT.md`.
 - Testes: Lighthouse mobile no `preview`; registro de throttling e viewport.
 - Estado: primeira medição registrada (Performance 77, LCP 4,5 s). O LCP é a imagem do busto,
   que só carrega depois do JS. O antivírus da máquina interfere na medição.
+- 2026-11-19: preload do busto e `sizes` corretos no celular. Atraso de carregamento do LCP de
+  1,8 s para 0,09 s. Falta medir sem o antivírus para fechar as metas ou justificar o desvio.
 
 ## TASK 14 — SEO e metadados — TODO
 
