@@ -4,12 +4,12 @@ Atualizado em 2026-11-19.
 
 ## Task atual
 
-TASK 13, performance. Status: IN_PROGRESS.
+TASK 14, SEO e metadados. Status: TODO.
 
 ## Última task concluída
 
-TASK 12, responsividade e acessibilidade (2026-11-19). A frase da cinemática agora é lida pelo
-leitor de tela; Lighthouse de acessibilidade em 100.
+TASK 13, performance (2026-11-19). Preload do busto e `sizes` corretos no celular. PageSpeed
+Insights da página publicada: Performance 99, Best Practices 100, LCP 1,8 s.
 
 ## Implementações existentes
 
@@ -34,8 +34,7 @@ Ver `DECISIONS.md`, decisões D01 a D16.
 
 ## Problemas e bloqueios
 
-- Lighthouse mobile: imagem do busto já com preload (TASK 13). Medições desta máquina sofrem com
-  o script do antivírus; falta medir sem ele.
+- Lighthouse local sofre com o script do antivírus; medir performance pelo PageSpeed Insights.
 - Rolagem horizontal no desktop depois do ato 3 da cinemática (frase escalada passa da borda).
   Correção proposta: `overflow-x: clip` no palco. Aguarda aprovação.
 - Sem favicon (404 de `/favicon.ico`), sem description, Open Graph e canonical. TASK 14.
@@ -48,9 +47,8 @@ https://maxrbrt.github.io/Portfolio/ pelo `.github/workflows/deploy.yml`.
 
 ## Testes executados
 
-Ver `QA_REPORT.md`, seções da TASK 12 e da TASK 13 (medição inicial).
+Ver `QA_REPORT.md`, seções da TASK 12 e da TASK 13.
 
 ## Próxima ação exata
 
-Publicar a TASK 13 e medir a página publicada no PageSpeed Insights (sem o antivírus). Com
-aprovação, corrigir a rolagem horizontal da cinemática. Depois, TASK 14 (SEO e favicon).
+Com aprovação, corrigir a rolagem horizontal da cinemática. Depois, TASK 14 (SEO e favicon).

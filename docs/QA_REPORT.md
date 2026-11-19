@@ -231,5 +231,8 @@ Somente testes realmente executados. Teste não feito é `NOT RUN`.
   da cinemática, `scrollWidth` vai a 1507 px. A frase escalada (`scale` com origem à esquerda)
   passa da borda direita e cria rolagem horizontal. Correção proposta: `overflow-x: clip` no
   palco da cinemática. Aguarda aprovação.
-- NOT RUN: Lighthouse sem o antivírus (outra máquina ou PageSpeed Insights) e medição da página
-  publicada com esta correção.
+- Página publicada com a correção, PageSpeed Insights (2026-11-19 08:54, celular, Moto G Power
+  emulado, Lighthouse 13.6, 4G lenta, sem antivírus): Performance 99, Accessibility 100, Best
+  Practices 100, SEO 91. FCP 0,8 s, LCP 1,8 s, TBT 120 ms, CLS 0, Speed Index 1,3 s. Metas de
+  Performance, Best Practices e LCP atingidas. SEO fica para a TASK 14. Aviso restante de cache
+  (349 KiB) vem do GitHub Pages e não é controlável.

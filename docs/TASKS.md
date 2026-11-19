@@ -114,7 +114,7 @@ visual de `TESTING.md` e registro em `QA_REPORT.md`.
   2026-11-18 (`QA_REPORT.md`). Frase da cinemática corrigida em 2026-11-19: o leitor de tela
   passou a ler "CODE WITH PURPOSE."; Lighthouse de acessibilidade em 100.
 
-## TASK 13 — Performance — IN_PROGRESS
+## TASK 13 — Performance — DONE
 
 - Dependências: 12.
 - Subtarefas: code splitting; imagens e GLB otimizados; DPR adaptativo; pausar cena fora da tela; Lighthouse no build.
@@ -123,7 +123,8 @@ visual de `TESTING.md` e registro em `QA_REPORT.md`.
 - Estado: primeira medição registrada (Performance 77, LCP 4,5 s). O LCP é a imagem do busto,
   que só carrega depois do JS. O antivírus da máquina interfere na medição.
 - 2026-11-19: preload do busto e `sizes` corretos no celular. Atraso de carregamento do LCP de
-  1,8 s para 0,09 s. Falta medir sem o antivírus para fechar as metas ou justificar o desvio.
+  1,8 s para 0,09 s. PageSpeed Insights da página publicada (sem antivírus): Performance 99,
+  Best Practices 100, LCP 1,8 s, CLS 0.
 
 ## TASK 14 — SEO e metadados — TODO
 
